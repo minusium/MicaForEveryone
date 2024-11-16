@@ -28,6 +28,12 @@ public sealed class RuleService : IRuleService
     public unsafe void Initialize()
     {
         _eventHookHandler = SetWinEventHook(EVENT_OBJECT_SHOW, EVENT_OBJECT_SHOW, HINSTANCE.NULL, &NewWindowShown, 0, 0, WINEVENT_OUTOFCONTEXT);
+        _settingsService.PropertyChanged += _settingsService_PropertyChanged;
+    }
+
+    private void _settingsService_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        _ = ApplyRulesToAllWindowsAsync();
     }
 
     [UnmanagedCallersOnly]

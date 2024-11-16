@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="MicaForEveryone.App.Views.AppSettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:MicaForEveryone.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:labs="using:CommunityToolkit.WinUI.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <controls:SettingsPageControl Header="_App settings">
+        <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+            <StackPanel.ChildrenTransitions>
+                <EntranceThemeTransition FromVerticalOffset="50" />
+                <RepositionThemeTransition IsStaggeringEnabled="False" />
+            </StackPanel.ChildrenTransitions>
+
+            <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="_Startup" />
+            <labs:SettingsCard Description="_Starts Mica For Everyone on launch." Header="_Launch on startup">
+                <labs:SettingsCard.HeaderIcon>
+                    <FontIcon Glyph="&#xE17C;" />
+                </labs:SettingsCard.HeaderIcon>
+
+                <ToggleSwitch />
+            </labs:SettingsCard>
+
+            <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="_About" />
+            <labs:SettingsExpander Description="{x:Bind ViewModel.AppVersion}" Header="_About Mica For Everyone">
+                <labs:SettingsExpander.HeaderIcon>
+                    <BitmapIcon
+                        Width="64"
+                        Height="64"
+                        ShowAsMonochrome="False"
+                        UriSource="ms-appx:///Assets/Square44x44Logo.png" />
+                </labs:SettingsExpander.HeaderIcon>
+                <labs:SettingsExpander.Items>
+                    <labs:SettingsCard ContentAlignment="Left">
+                        <HyperlinkButton Content="GitHub" NavigateUri="https://github.com/MicaForEveryone/MicaForEveryone/tree/winui3" />
+                    </labs:SettingsCard>
+                </labs:SettingsExpander.Items>
+            </labs:SettingsExpander>
+        </StackPanel>
+    </controls:SettingsPageControl>
+</Page>

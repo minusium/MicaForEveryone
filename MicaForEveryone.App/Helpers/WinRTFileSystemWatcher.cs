@@ -87,7 +87,7 @@ public sealed partial class WinRTFileSystemWatcher : IDisposable
         // internal readonly fixed char FileName[1];
     }
 
-    private enum FileAction : uint
+    public enum FileAction : uint
     {
         FILE_ACTION_ADDED = 0x00000001,
         FILE_ACTION_REMOVED = 0x00000002,
@@ -202,46 +202,7 @@ public sealed partial class WinRTFileSystemWatcher : IDisposable
             ReadOnlySpan<char> fileName = MemoryMarshal.Cast<byte, char>(
                 buffer.Slice(sizeof(FILE_NOTIFY_INFORMATION), (int)info.FileNameLength));
 
-            switch (info.Action)
-            {
-                case FileAction.FILE_ACTION_RENAMED_OLD_NAME:
-                    // Action is renamed from, save the name of the file
-                    oldName = fileName;
-                    break;
-                case FileAction.FILE_ACTION_RENAMED_NEW_NAME:
-                    // oldName may be empty if we didn't receive FILE_ACTION_RENAMED_OLD_NAME first
-                    NotifyRenameEventArgs(
-                        WatcherChangeTypes.Renamed,
-                        fileName,
-                        oldName);
-                    oldName = ReadOnlySpan<char>.Empty;
-                    break;
-                default:
-                    if (!oldName.IsEmpty)
-                    {
-                        // Previous FILE_ACTION_RENAMED_OLD_NAME with no new name
-                        NotifyRenameEventArgs(WatcherChangeTypes.Renamed, ReadOnlySpan<char>.Empty, oldName);
-                        oldName = ReadOnlySpan<char>.Empty;
-                    }
-
-                    switch (info.Action)
-                    {
-                        case FileAction.FILE_ACTION_ADDED:
-                            NotifyFileSystemEventArgs(WatcherChangeTypes.Created, fileName);
-                            break;
-                        case FileAction.FILE_ACTION_REMOVED:
-                            NotifyFileSystemEventArgs(WatcherChangeTypes.Deleted, fileName);
-                            break;
-                        case FileAction.FILE_ACTION_MODIFIED:
-                            NotifyFileSystemEventArgs(WatcherChangeTypes.Changed, fileName);
-                            break;
-                        default:
-                            Debug.Fail($"Unknown FileSystemEvent action type!  Value: {info.Action}");
-                            break;
-                    }
-
-                    break;
-            }
+            Changed?.Invoke(this, info.Action, fileName.ToString());
 
             if (info.NextEntryOffset == 0)
             {
@@ -258,23 +219,7 @@ public sealed partial class WinRTFileSystemWatcher : IDisposable
             buffer = buffer.Slice((int)info.NextEntryOffset);
         }
 
-        if (!oldName.IsEmpty)
-        {
-            // Previous FILE_ACTION_RENAMED_OLD_NAME with no new name
-            NotifyRenameEventArgs(WatcherChangeTypes.Renamed, ReadOnlySpan<char>.Empty, oldName);
-        }
-
         Monitor(state);
-    }
-
-    private void NotifyRenameEventArgs(WatcherChangeTypes action, ReadOnlySpan<char> name, ReadOnlySpan<char> oldName)
-    {
-        Renamed?.Invoke(name, oldName);
-    }
-
-    private void NotifyFileSystemEventArgs(WatcherChangeTypes changeType, ReadOnlySpan<char> name)
-    {
-        Changed?.Invoke(changeType, name);
     }
 
     public void Dispose()
@@ -287,8 +232,7 @@ public sealed partial class WinRTFileSystemWatcher : IDisposable
         }
     }
 
-    public delegate void RenamedFileHandler(ReadOnlySpan<char> name, ReadOnlySpan<char> oldName);
-    public event RenamedFileHandler? Renamed;
-    public delegate void FileSystemEventHandler(WatcherChangeTypes changeTypes, ReadOnlySpan<char> name);
-    public event FileSystemEventHandler? Changed;
+    public delegate void DirectoryChangeEventHandler(WinRTFileSystemWatcher watcher, FileAction action, string fileName);
+
+    public event DirectoryChangeEventHandler? Changed;
 }

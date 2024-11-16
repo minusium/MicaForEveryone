@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="MicaForEveryone.App.Views.RuleSettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:MicaForEveryone.App.Controls"
+    xmlns:ct="using:CommunityToolkit.WinUI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helpers="using:MicaForEveryone.App.Helpers"
+    xmlns:local="using:MicaForEveryone.App.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:MicaForEveryone.Models"
+    x:Name="ThisPage"
+    mc:Ignorable="d">
+
+    <controls:SettingsPageControl Header="{x:Bind helpers:RuleInfoHelper.GetRuleName(Rule)}">
+        <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+            <StackPanel.ChildrenTransitions>
+                <EntranceThemeTransition FromVerticalOffset="50" />
+                <RepositionThemeTransition IsStaggeringEnabled="False" />
+            </StackPanel.ChildrenTransitions>
+
+            <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="_Style" />
+            <ct:SettingsCard Header="_Title bar color">
+                <ct:SettingsCard.HeaderIcon>
+                    <FontIcon Glyph="&#xE790;" />
+                </ct:SettingsCard.HeaderIcon>
+
+                <ComboBox
+                    MinWidth="110"
+                    ItemsSource="{x:Bind helpers:EnumHelper.TitleBarColorModes}"
+                    SelectedItem="{x:Bind Rule.TitleBarColor, Mode=TwoWay}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="models:TitleBarColorMode">
+                            <TextBlock Text="{x:Bind local:RuleSettingsPage.GetTitleBarColorLocalized((models:TitleBarColorMode)), Mode=OneWay}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </ct:SettingsCard>
+            <ct:SettingsCard Header="_Backdrop type">
+                <ct:SettingsCard.HeaderIcon>
+                    <FontIcon Glyph="&#xF5EF;" />
+                </ct:SettingsCard.HeaderIcon>
+
+                <ComboBox
+                    MinWidth="110"
+                    ItemsSource="{x:Bind helpers:EnumHelper.BackdropTypes}"
+                    SelectedItem="{x:Bind Rule.BackdropPreference, Mode=TwoWay}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="models:BackdropType">
+                            <TextBlock Text="{x:Bind local:RuleSettingsPage.GetBackdropTypeLocalized((models:BackdropType)), Mode=OneWay}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </ct:SettingsCard>
+            <ct:SettingsCard Header="_Corner preference">
+                <ct:SettingsCard.HeaderIcon>
+                    <FontIcon Glyph="&#xE71A;" />
+                </ct:SettingsCard.HeaderIcon>
+
+                <ComboBox
+                    MinWidth="110"
+                    ItemsSource="{x:Bind helpers:EnumHelper.CornerPreferences}"
+                    SelectedItem="{x:Bind Rule.CornerPreference, Mode=TwoWay}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="models:CornerPreference">
+                            <TextBlock Text="{x:Bind local:RuleSettingsPage.GetCornerPreferenceLocalized((models:CornerPreference)), Mode=OneWay}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </ct:SettingsCard>
+
+            <TextBlock
+                Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"
+                Text="_Remove"
+                Visibility="{x:Bind local:RuleSettingsPage.NotGlobalRuleVisibility(Rule)}" />
+            <ct:SettingsCard
+                Click="SettingsCard_Click"
+                Header="_Remove rule"
+                HeaderIcon="Delete"
+                IsClickEnabled="True"
+                Visibility="{x:Bind local:RuleSettingsPage.NotGlobalRuleVisibility(Rule)}" />
+        </StackPanel>
+    </controls:SettingsPageControl>
+</Page>

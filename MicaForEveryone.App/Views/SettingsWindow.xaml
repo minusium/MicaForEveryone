@@ -73,7 +73,8 @@
             ItemInvoked="NavigationView_ItemInvoked"
             MenuItemTemplateSelector="{StaticResource IsDataTypeTemplateSelector}"
             MenuItemsSource="{x:Bind ViewModel.SettingsService.Settings.Rules, Mode=OneWay}"
-            PaneDisplayMode="Left">
+            PaneDisplayMode="Left"
+            SelectionChanged="NavigationViewControl_SelectionChanged">
             <NavigationView.Resources>
                 <Thickness x:Key="NavigationViewContentGridBorderThickness">0</Thickness>
                 <SolidColorBrush x:Key="NavigationViewContentBackground" Color="Transparent" />

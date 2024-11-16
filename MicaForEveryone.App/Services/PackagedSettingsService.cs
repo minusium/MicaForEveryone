@@ -3,9 +3,11 @@ using MicaForEveryone.CoreUI;
 using MicaForEveryone.Models;
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.Storage;
 
@@ -36,9 +38,11 @@ public sealed partial class PackagedSettingsService : ISettingsService
 
     private WinRTFileSystemWatcher? watcher;
 
-    private int recentWriteDueToApp = 0;
+    private bool recentWriteDueToApp = false;
 
     private IDispatchingService _dispatching;
+
+    private SemaphoreSlim semaphore = new(1, 1);
 
     public PackagedSettingsService(IDispatchingService dispatching)
     {
@@ -61,32 +65,47 @@ public sealed partial class PackagedSettingsService : ISettingsService
         watcher.Changed += Watcher_Changed;
     }
 
-    private void Watcher_Changed(WatcherChangeTypes changeTypes, ReadOnlySpan<char> name) => _ = WatcherChangedAsync(changeTypes, name.ToString());
-
-    private async Task WatcherChangedAsync(WatcherChangeTypes changeTypes, string name)
+    private void Watcher_Changed(WinRTFileSystemWatcher watcher, WinRTFileSystemWatcher.FileAction action, string fileName)
     {
-        if (!name.Equals(SettingsFileName, StringComparison.CurrentCultureIgnoreCase))
+        _ = WatcherChangedAsync(fileName);
+    }
+
+    private async Task WatcherChangedAsync(string name)
+    {
+        if (name != string.Empty && !name.Equals(SettingsFileName, StringComparison.CurrentCultureIgnoreCase))
             return;
 
-        if (recentWriteDueToApp != 0)
-        {
-            recentWriteDueToApp++;
-            if (recentWriteDueToApp == 3)
-                recentWriteDueToApp = 0;
+        if (semaphore.CurrentCount == 0)
             return;
+
+        await semaphore.WaitAsync();
+
+        await Task.Delay(200);
+
+        if (recentWriteDueToApp == true)
+        {
+            recentWriteDueToApp = false;
+            goto RELEASE_SEMAPHORE;
         }
 
         await _dispatching.YieldAsync();
 
-        using Stream settingsStream = await settingsFile!.OpenStreamForReadAsync();
-        Settings = await JsonSerializer.DeserializeAsync(settingsStream, MFESerializerContext.Default.SettingsFileModel);
+        // TODO: Finish this
+        using (Stream settingsStream = await settingsFile!.OpenStreamForReadAsync())
+        {
+            Settings = await JsonSerializer.DeserializeAsync(settingsStream, MFESerializerContext.Default.SettingsFileModel);
+        }
+        Debug.WriteLine("Reloaded");
+
+RELEASE_SEMAPHORE:
+        semaphore.Release();
     }
 
     public async Task SaveAsync()
     {
         using (Stream settingsStream = (await settingsFile!.OpenAsync(FileAccessMode.ReadWrite, StorageOpenOptions.AllowOnlyReaders)).AsStreamForWrite())
         {
-            recentWriteDueToApp = 1;
+            recentWriteDueToApp = true;
             settingsStream.SetLength(0);
             await JsonSerializer.SerializeAsync(settingsStream!, Settings!, MFESerializerContext.Default.SettingsFileModel);
         }

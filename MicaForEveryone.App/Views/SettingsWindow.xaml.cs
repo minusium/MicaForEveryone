@@ -1,4 +1,5 @@
 using MicaForEveryone.App.ViewModels;
+using MicaForEveryone.Models;
 using MicaForEveryone.PInvoke;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
@@ -72,6 +73,18 @@ public sealed partial class SettingsWindow : Window
         if (args.InvokedItemContainer.Tag is SettingsNavigationItem { Tag: "AddRuleNavViewItem" })
         {
             _addNewItemFlyout.ShowAt(args.InvokedItemContainer);
+        }
+    }
+
+    private void NavigationViewControl_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+    {
+        if (args.SelectedItem is Rule rule)
+        {
+            _contentFrame.Navigate(typeof(RuleSettingsPage), rule);
+        }
+        else
+        {
+            _contentFrame.Navigate(typeof(AppSettingsPage));
         }
     }
 }

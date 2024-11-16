@@ -24,10 +24,10 @@ public partial class App
         ServiceCollection collection = new();
 
         collection.AddSingleton<IDispatchingService>(new DispatchingService(DispatcherQueue.GetForCurrentThread()));
-        // collection.AddSingleton<ILocalizationService>(new LocalizationService());
+        collection.AddSingleton<ILocalizationService>(new LocalizationService());
 
         // Check if we are really running packaged.
-        // collection.AddSingleton<IVersionInfoService, PackagedVersionInfoService>();
+        collection.AddSingleton<IVersionInfoService, PackagedVersionInfoService>();
         collection.AddSingleton<ISettingsService, PackagedSettingsService>();
 
         ConfigureServices(collection);
@@ -41,5 +41,6 @@ public partial class App
     [Transient(typeof(TrayIconViewModel))]
     [Transient(typeof(AddClassRuleContentDialogViewModel))]
     [Transient(typeof(AddProcessRuleContentDialogViewModel))]
+    [Transient(typeof(AppSettingsPageViewModel))]
     private static partial void ConfigureServices(IServiceCollection services);
 }

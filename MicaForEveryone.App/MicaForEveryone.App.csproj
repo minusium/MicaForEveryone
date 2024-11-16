@@ -4,7 +4,7 @@
 		<!-- Built-in -->
 		
 		<OutputType>WinExe</OutputType>
-		<TargetFramework>net8.0-windows10.0.22621.0</TargetFramework>
+		<TargetFramework>net9.0-windows10.0.22621.0</TargetFramework>
 		<TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
 		<RootNamespace>MicaForEveryone.App</RootNamespace>
 		<ApplicationManifest>app.manifest</ApplicationManifest>
@@ -13,11 +13,12 @@
 		<RuntimeIdentifier>win-$(Platform)</RuntimeIdentifier>
 		<UseWinUI>true</UseWinUI>
 		<EnableMsixTooling>true</EnableMsixTooling>
+		<SelfContained>true</SelfContained>
 		
 		<!-- Enable AOT publishing on F5 -->
 		
 		<PublishAot>true</PublishAot>
-		<IncludePublishItemsOutputGroup>true</IncludePublishItemsOutputGroup>
+		<!--<IncludePublishItemsOutputGroup>true</IncludePublishItemsOutputGroup>-->
 		
 		<!-- App-specific settings -->
 		
@@ -44,8 +45,9 @@
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Labs.Extensions.DependencyInjection" Version="0.1.240823-build.1737" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
-		<PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.3" />
+		<PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.2.241112-preview1" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
+		<PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" />
 		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240923002" />
 		<Manifest Include="$(ApplicationManifest)" />
