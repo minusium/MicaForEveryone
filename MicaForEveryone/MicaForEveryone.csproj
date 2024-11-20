@@ -40,7 +40,7 @@
         <PackageReference Include="Microsoft.Toolkit.UI.XamlHost" Version="6.1.2" />
         <PackageReference Include="Microsoft.VCRTForwarders.140" Version="1.1.0" />
         <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
-        <PackageReference Include="TaskScheduler" Version="2.10.1" />
+        <PackageReference Include="TaskScheduler" Version="2.11.0" />
         <PackageReference Include="XclParser" Version="1.0.8" />
     </ItemGroup>
 
