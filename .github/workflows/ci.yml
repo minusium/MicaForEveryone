@@ -39,7 +39,7 @@ jobs:
       - name: Build the application
         run: msbuild MicaForEveryone\MicaForEveryone.csproj /restore /p:BuildingInCI=true /p:Configuration=${{ matrix.configuration }} /p:Platform=${{ matrix.platform }} /p:ReleaseDirectory=..\${{ env.RELEASE_DIR }} /p:ZipName=${{ env.ZIP_FILE }} /t:ReleaseZip
       - name: Upload ZIP artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.ZIP_FILE }}
           path: ${{ env.RELEASE_DIR }}\${{ env.ZIP_FILE }}
@@ -52,7 +52,7 @@ jobs:
           Source: MicaForEveryone\bin\${{ matrix.platform }}\${{ matrix.configuration }}\netcoreapp3.1
           VERSION: ${{ startsWith(github.ref, 'refs/tags/v') && steps.get_version.outputs.version-without-v || '0.0.0.0'  }} # Use version tag if available, else use 0.0.0.0
       - name: Upload installer artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.INSTALLER_FILE_BASE_NAME }}
           path: ${{ env.RELEASE_DIR }}\${{ env.INSTALLER_FILE_BASE_NAME }}.exe
@@ -89,7 +89,7 @@ jobs:
         if: "${{ env.KEY_PASSWORD != '' }}"
         run: '& "C:\Program Files (x86)\Windows Kits\10\bin\10.0.22000.0\x64\signtool.exe" sign /fd SHA256 /a /f MicaForEveryone.pfx /p "${{ secrets.KEY_PASSWORD }}" ${{ env.RELEASE_DIR }}\${{ env.MSIX_FILE }}'
       - name: Upload MSIX
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.MSIX_FILE }}
           path: ${{ env.RELEASE_DIR }}\${{ env.MSIX_FILE }}
