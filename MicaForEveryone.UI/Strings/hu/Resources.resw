@@ -432,4 +432,7 @@ Javítsa ki a hibákat, majd használja a „Konfigurációs fájl újratöltés
   <data name="ExitSetting.Header" xml:space="preserve">
     <value>Kilépés</value>
   </data>
+  <data name="DiscordButton.Content" xml:space="preserve">
+    <value>Discord</value>
+  </data>
 </root>
