@@ -432,4 +432,25 @@
   <data name="TrayIconVisibilitySetting.Header" xml:space="preserve">
     <value>显示通知图标</value>
   </data>
+  <data name="BorderColor.Description" xml:space="preserve">
+    <value>BBGGRR 16 进制字符串颜色, 留空默认
+需要 build 22000+</value>
+  </data>
+  <data name="BorderColor.Header" xml:space="preserve">
+    <value>窗口包围颜色</value>
+  </data>
+  <data name="CaptionColor.Description" xml:space="preserve">
+    <value>BBGGRR 16 进制字符串颜色, 留空默认
+需要 build 22000+</value>
+  </data>
+  <data name="CaptionColor.Header" xml:space="preserve">
+    <value>标题栏颜色</value>
+  </data>
+  <data name="CaptionTextColor.Description" xml:space="preserve">
+    <value>BBGGRR 16 进制字符串颜色, 留空默认
+需要 build 22000+</value>
+  </data>
+  <data name="CaptionTextColor.Header" xml:space="preserve">
+    <value>标题栏文字颜色</value>
+  </data>
 </root>

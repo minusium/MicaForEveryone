@@ -19,6 +19,8 @@ namespace MicaForEveryone
         [STAThread]
         public static async Task Main(string[] args)
         {
+            AccentColor.InitializeListeners();
+
             if (Environment.OSVersion.Version.Build < 18362)
             {
                 Environment.Exit(1);

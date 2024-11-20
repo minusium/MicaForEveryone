@@ -36,6 +36,24 @@ namespace MicaForEveryone.Win32
             Environment.OSVersion.Version.Build >= 22000;
 
         /// <summary>
+        /// Check whether Windows Windows build is 22000 or higher, that supports <see cref="SetCaptionColor(IntPtr, COLORREF)"/>
+        /// </summary>
+        public static bool IsCaptionColorSupported { get; } =
+            Environment.OSVersion.Version.Build >= 22000;
+
+        /// <summary>
+        /// Check whether Windows Windows build is 22000 or higher, that supports <see cref="SetCaptionTextColor(IntPtr, COLORREF)"/>
+        /// </summary>
+        public static bool IsCaptionTextColorSupported { get; } =
+            Environment.OSVersion.Version.Build >= 22000;
+
+        /// <summary>
+        /// Check whether Windows Windows build is 22000 or higher, that supports <see cref="SetBorderColor(IntPtr, COLORREF)"/>
+        /// </summary>
+        public static bool IsBorderColorSupported { get; } =
+            Environment.OSVersion.Version.Build >= 22000;
+
+        /// <summary>
         /// Enable Mica on target window with <see cref="SetMica(IntPtr, bool)"/> or <see cref="SetBackdropType(IntPtr, DWM_SYSTEMBACKDROP_TYPE)"/> if supported.
         /// </summary>
         /// <param name="hWnd">Handle of the target window for the operation.</param>
@@ -159,6 +177,26 @@ namespace MicaForEveryone.Win32
         }
 
         /// <summary>
+        /// Change border color of window.
+        /// Requires Windows build 22000 or higher.
+        /// </summary>
+#if NET6_0_OR_GREATER
+        [SupportedOSPlatform("windows10.0.22000")]
+#endif
+        public static void SetBorderColor(IntPtr hWnd, COLORREF color)
+        {
+            if (Environment.OSVersion.Version.Build < 22000)
+                return;
+
+            var value = GCHandle.Alloc(color, GCHandleType.Pinned);
+            var result = DwmSetWindowAttribute(hWnd, DWMWA_BORDER_COLOR, value.AddrOfPinnedObject(), Marshal.SizeOf(color));
+            value.Free();
+            if (result != 0)
+            {
+                throw Marshal.GetExceptionForHR(result);
+            }
+        }
+
         /// Enables the Blur effects to be rendered in the window's background.
         /// </summary>
         /// <param name="hWnd">Handle of the target window for the operation.</param>

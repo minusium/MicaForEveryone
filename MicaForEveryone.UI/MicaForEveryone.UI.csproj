@@ -308,14 +308,14 @@
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <Target Name="RemoveWebView2" BeforeTargets="ResolveAssemblyReferences" Condition="$(BuildingInCI) != 'true'">
-    <ItemGroup>
+    <!-- <ItemGroup>
       <_WebView2Reference Include="@(Reference)" Condition="'%(Filename)' == 'Microsoft.Web.WebView2.Core'" />
       <Reference Remove="@(_WebView2Reference)" />
       <Reference Include="@(_WebView2Reference)" RemoveMetadata="Implementation">
         <Private>false</Private>
       </Reference>
       <ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)" Condition="'%(Filename)' == 'Microsoft.Web.WebView2.Core'" />
-    </ItemGroup>
+    </ItemGroup> -->
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -27,6 +27,15 @@ namespace MicaForEveryone.Core.Models
         [XclField]
         public bool EnableBlurBehind { get; set; }
 
+        [XclField]
+        public string CaptionColor { get; set; } = string.Empty;
+
+        [XclField]
+        public string CaptionTextColor { get; set; } = string.Empty;
+
+        [XclField]
+        public string BorderColor { get; set; } = string.Empty;
+
         public bool IsApplicable(TargetWindow target) => true;
 
         public override string ToString() => Name;

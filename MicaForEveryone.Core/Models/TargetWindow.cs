@@ -88,6 +88,53 @@ namespace MicaForEveryone.Core.Models
             }
         }
 
+        public void ApplyCaptionColorRule(COLORREF captionColor)
+        {
+            if (!DesktopWindowManager.IsCaptionColorSupported) return;
+            if (captionColor == COLORREF.Default) return;
+            DesktopWindowManager.SetCaptionColor(WindowHandle, captionColor);
+        }
+
+        public void ApplyCaptionTextColorRule(COLORREF captionTextColor)
+        {
+            if (!DesktopWindowManager.IsCaptionTextColorSupported) return;
+            if (captionTextColor == COLORREF.Default) return;
+            DesktopWindowManager.SetCaptionTextColor(WindowHandle, captionTextColor);
+        }
+
+        public void ApplyBorderColorRule(COLORREF borderColor)
+        {
+            if (!DesktopWindowManager.IsBorderColorSupported)
+                return;
+            if (borderColor == COLORREF.Default)
+                return;
+            DesktopWindowManager.SetBorderColor(WindowHandle, borderColor);
+        }
+
+        /**
+         * Converts a string, that may be a special value (i.e. Accent) to a COLORREF.
+         */
+        private static UInt32 StringToColorRef(string? value)
+        {
+            // Special values
+            if (value == "Accent")
+                return AccentColor.GetAccentColor();
+
+            try
+            {
+                if (value == null)
+                    return 0;
+
+                var rgb = Convert.ToUInt32(value, 16);
+                var bgr = ((rgb & 0xFF) << 16) | (rgb & 0xFF00) | ((rgb >> 16) & 0xFF);
+                return bgr;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
         public void ApplyRule(IRule rule, TitlebarColorMode systemTitlebarColorMode)
         {
 #if DEBUG
@@ -96,6 +143,22 @@ namespace MicaForEveryone.Core.Models
             ApplyTitlebarColorRule(rule.TitleBarColor, systemTitlebarColorMode);
             ApplyBackdropRule(rule.BackdropPreference);
             ApplyCornerPreferenceRule(rule.CornerPreference);
+
+            try
+            {
+                if (rule.CaptionColor != null)
+                    ApplyCaptionColorRule(StringToColorRef(rule.CaptionColor));
+                if (rule.CaptionTextColor != null)
+                    ApplyCaptionTextColorRule(StringToColorRef(rule.CaptionTextColor));
+                if (rule.BorderColor != null)
+                    ApplyBorderColorRule(StringToColorRef(rule.BorderColor));
+            }
+            catch (FormatException)
+            {
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+            }
 
             if (rule.ExtendFrameIntoClientArea)
                 DesktopWindowManager.ExtendFrameIntoClientArea(WindowHandle);

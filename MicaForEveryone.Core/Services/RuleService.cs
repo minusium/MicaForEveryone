@@ -19,6 +19,7 @@ namespace MicaForEveryone.Core.Services
             _settingsService.RuleChanged += SettingsService_Changed;
             _settingsService.ConfigFileReloaded += SettingsService_Changed;
             _settingsService.ConfigFilePathChanged += SettingsService_Changed;
+            AccentColor.AccentColorChanged += Accent_Changed;
         }
 
         ~RuleService()
@@ -28,6 +29,7 @@ namespace MicaForEveryone.Core.Services
             _settingsService.RuleChanged -= SettingsService_Changed;
             _settingsService.ConfigFileReloaded -= SettingsService_Changed;
             _settingsService.ConfigFilePathChanged -= SettingsService_Changed;
+            AccentColor.AccentColorChanged -= Accent_Changed;
             Dispose(false);
         }
 
@@ -66,7 +68,7 @@ namespace MicaForEveryone.Core.Services
             catch (Exception ex)
             {
 				System.Diagnostics.Debug.WriteLine(ex);
-				System.Diagnostics.Debugger.Break();
+				// System.Diagnostics.Debugger.Break();
             }
 #else
             catch
@@ -118,6 +120,11 @@ namespace MicaForEveryone.Core.Services
 			var target = TargetWindow.FromWindow(args.Window);
 			MatchAndApplyRuleToWindow(target);
 		}
+
+        public void Accent_Changed(object? sender, EventArgs args)
+        {
+            SettingsService_Changed(sender, args);
+        }
 
         private void Dispose(bool disposing)
         {

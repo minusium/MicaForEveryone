@@ -21,6 +21,7 @@ namespace MicaForEveryone.UI
             new Contributor("Dongle the Gadget", "https://github.com/dongle-the-gadget", null),
             new Contributor("sitiom", "https://github.com/sitiom", null),
             new Contributor("krlvm", "https://github.com/krlvm", null),
+            new Contributor("o0kam1", "https://github.com/duzhaokun123", null),
             new Contributor("TheXDS", "https://github.com/TheXDS", null),
         };
 

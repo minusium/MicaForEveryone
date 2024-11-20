@@ -432,6 +432,26 @@ Fix errors then use "Reload config file" option to reload it.</value>
   <data name="ExitSetting.Header" xml:space="preserve">
     <value>Exit</value>
   </data>
+  <data name="BorderColor.Description" xml:space="preserve">
+    <value>Color in RRGGBB hex string, empty for default
+requires build 22000+</value>
+  </data>
+  <data name="BorderColor.Header" xml:space="preserve">
+    <value>Window Border Color</value>
+  </data>
+  <data name="CaptionColor.Description" xml:space="preserve">
+    <value>Color in RRGGBB hex string, empty for default
+requires build 22000+</value>
+  </data>
+  <data name="CaptionColor.Header" xml:space="preserve">
+    <value>TitleBar Color</value>
+  </data>
+  <data name="CaptionTextColor.Description" xml:space="preserve">
+    <value>Color in RRGGBB hex string, empty for default
+requires build 22000+</value>
+  </data>
+  <data name="CaptionTextColor.Header" xml:space="preserve">
+    <value>TitleBar Text Color</value>
   <data name="DiscordButton.Content" xml:space="preserve">
     <value>Discord</value>
   </data>

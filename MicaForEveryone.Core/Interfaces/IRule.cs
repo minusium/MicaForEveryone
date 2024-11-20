@@ -9,7 +9,7 @@ public interface IRule
     string Name { get; }
 
     int Priority { get; }
-        
+
     bool IsApplicable(TargetWindow target);
 
     TitlebarColorMode TitleBarColor { get; set; }
@@ -17,6 +17,9 @@ public interface IRule
     CornerPreference CornerPreference { get; set; }
     bool ExtendFrameIntoClientArea { get; set; }
     bool EnableBlurBehind { get; set; }
+    string CaptionColor { get; set; }
+    string CaptionTextColor { get; set; }
+    string BorderColor { get; set; }
 
     RulePaneItem GetPaneItem(ISettingsViewModel parent, IRuleSettingsViewModel viewModel);
 }
