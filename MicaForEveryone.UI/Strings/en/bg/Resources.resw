@@ -1,0 +1,438 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AboutTitle.Text" xml:space="preserve">
+    <value>За това приложение</value>
+  </data>
+  <data name="AcrylicBackdropDescription.Text" xml:space="preserve">
+    <value>Акрил кара всички приложения да използват ефекта на Windows 10 за размазване на фона.</value>
+  </data>
+  <data name="AcrylicMenuItem.Text" xml:space="preserve">
+    <value>Акрил</value>
+  </data>
+  <data name="AddButton.Content" xml:space="preserve">
+    <value>Добави</value>
+  </data>
+  <data name="AddClassRuleContentDialog.Title" xml:space="preserve">
+    <value>Ново правило за клас</value>
+  </data>
+  <data name="AddClassRuleMenuItem.Text" xml:space="preserve">
+    <value>Добави ново правило за клас</value>
+  </data>
+  <data name="AddProcessRuleContentDialog.Title" xml:space="preserve">
+    <value>Ново правило за процес</value>
+  </data>
+  <data name="AddProcessRuleMenuItem.Text" xml:space="preserve">
+    <value> Добави ново правило за процес</value>
+  </data>
+  <data name="AddRuleAppBarButton.Label" xml:space="preserve">
+    <value>Добави правило</value>
+  </data>
+  <data name="AddRuleDialog.Title" xml:space="preserve">
+    <value>Добави правило</value>
+  </data>
+  <data name="AdvancedMenu.Text" xml:space="preserve">
+    <value>Конфигурирай файлл</value>
+  </data>
+  <data name="AppInitializationError.Title" xml:space="preserve">
+    <value>Грешка при стартиране на приложението</value>
+  </data>
+  <data name="AppName" xml:space="preserve">
+    <value>Мика за всеки</value>
+  </data>
+  <data name="AppNameLabel.Text" xml:space="preserve">
+    <value>Мика за всеки</value>
+  </data>
+  <data name="BackdropDescription.Text" xml:space="preserve">
+    <value>Задай тип на фон</value>
+  </data>
+  <data name="BackdropMenu.Text" xml:space="preserve">
+    <value>Тип на фон</value>
+  </data>
+  <data name="BackdropTypeSetting.Header" xml:space="preserve">
+    <value>Тип на фон</value>
+  </data>
+  <data name="BlurBehindSetting.Description" xml:space="preserve">
+    <value>Направи прозорците полупрозрачни и замъглени. Деактивирането на тази опция изисква да затворите и отварите отново избраните приложения.</value>
+  </data>
+  <data name="BlurBehindSetting.Header" xml:space="preserve">
+    <value>Замъгли зад</value>
+  </data>
+  <data name="BrowseButton.Content" xml:space="preserve">
+    <value>Отвори</value>
+  </data>
+  <data name="CancelButton.Content" xml:space="preserve">
+    <value>Откажи</value>
+  </data>
+  <data name="ClassNameSuggestBox.Description" xml:space="preserve">
+    <value>Въведете името на класа на прозореца</value>
+  </data>
+  <data name="ClassNameSuggestBox.Header" xml:space="preserve">
+    <value>Име на класа:</value>
+  </data>
+  <data name="CloseButton.Content" xml:space="preserve">
+    <value>Затвори</value>
+  </data>
+  <data name="ConfigFileError.Content" xml:space="preserve">
+    <value>Грешка във файла за конфигуриране:
+{0}
+
+Отстранете грешките, след което използвайте "Презареждане на конфигурационния файл" за да презаредите.</value>
+  </data>
+  <data name="ConfigFileError.Header" xml:space="preserve">
+    <value>Грешка във файла за конфигуриране</value>
+  </data>
+  <data name="ConfigFilePathSetting.Description" xml:space="preserve">
+    <value>Файл, който да се използва за запазване и зареждане на правила.</value>
+  </data>
+  <data name="ConfigFilePathSetting.Header" xml:space="preserve">
+    <value>Път към файла</value>
+  </data>
+  <data name="DarkMenuItem.Text" xml:space="preserve">
+    <value>Тъмно</value>
+  </data>
+  <data name="DarkTitlebarColorDescription.Text" xml:space="preserve">
+    <value>Тъмно използва тъмна тема.</value>
+  </data>
+  <data name="DefaultBackdropDescription.Text" xml:space="preserve">
+    <value>Подразбиране не прави нищо, с цел да запази фоновото изображение по подразбиране на приложението.</value>
+  </data>
+  <data name="DefaultMenuItem.Text" xml:space="preserve">
+    <value>Подразбиране</value>
+  </data>
+  <data name="DefaultTitlebarColorDescription.Text" xml:space="preserve">
+    <value>Опцията "Подразбиране" запазва темата по подразбиране на приложението.</value>
+  </data>
+  <data name="ExitMenuItem.Text" xml:space="preserve">
+    <value>Изход</value>
+  </data>
+  <data name="ExtendFrameIntoClientAreaSetting.Header" xml:space="preserve">
+    <value>Разширяване на рамката в зоната на клиента</value>
+  </data>
+  <data name="ExtendFrameIntoClientAreaSetting.Description" xml:space="preserve">
+    <value>Разширява рамката на прозореца в клиентската му област, за да добави фон на някои приложения. Не работи при всички приложения и може да ги повреди, така че не го включвайте, освен ако не знаете какво правите. Деактивирането на тази опция изисква да затворите и отворите отново засегнатите приложения.</value>
+  </data>
+  <data name="GeneralPaneItem.Text" xml:space="preserve">
+    <value>Общи</value>
+  </data>
+  <data name="GeneralSetting.Header" xml:space="preserve">
+    <value>Общи</value>
+  </data>
+  <data name="GitHubButton.Content" xml:space="preserve">
+    <value>GitHub</value>
+  </data>
+  <data name="GlobalRulePaneItem.Text" xml:space="preserve">
+    <value>Глобално правило Rule</value>
+  </data>
+  <data name="LanguageSetting.Description" xml:space="preserve">
+    <value>Задайте предпочитания от вас език за потребителския интерфейс. Приложението се нуждае от рестартиране, за да влезе в сила.</value>
+  </data>
+  <data name="LanguageSetting.Header" xml:space="preserve">
+    <value>Език</value>
+  </data>
+  <data name="LightMenuItem.Text" xml:space="preserve">
+    <value>Светло</value>
+  </data>
+  <data name="LightTitlebarColorDescription.Text" xml:space="preserve">
+    <value>Светло използва светла тема.</value>
+  </data>
+  <data name="MicaBackdropDescription.Text" xml:space="preserve">
+    <value>Мика кара всички приложения да използват ефекта на Windows 11 за затъмнен фон на тапета.</value>
+  </data>
+  <data name="MicaMenuItem.Text" xml:space="preserve">
+    <value>Мика</value>
+  </data>
+  <data name="NoneBackdropDescription.Text" xml:space="preserve">
+    <value>Никой деактивира задния план, дори в приложения, в които той вече е активиран.</value>
+  </data>
+  <data name="NoneMenuItem.Text" xml:space="preserve">
+    <value>Никой</value>
+  </data>
+  <data name="OkButton.Text" xml:space="preserve">
+    <value>Ок</value>
+  </data>
+  <data name="OpenInEditorMenuItem.Text" xml:space="preserve">
+    <value>Отвори файла в текстовия редактор</value>
+  </data>
+  <data name="ProcessNameSuggestBox.Description" xml:space="preserve">
+    <value>Въведете името на изпълним файл без разширението му (.exe) </value>
+  </data>
+  <data name="ProcessNameSuggestBox.Header" xml:space="preserve">
+    <value>Име на процеса:</value>
+  </data>
+  <data name="ReloadMenuItem.Text" xml:space="preserve">
+    <value>Презареди</value>
+  </data>
+  <data name="ReloadOnChangeSetting.Description" xml:space="preserve">
+    <value>Автоматично презарежда конфигурацията при промяна на конфигурационния файл.</value>
+  </data>
+  <data name="ReloadOnChangeSetting.Header" xml:space="preserve">
+    <value>Презареди при промяна</value>
+  </data>
+  <data name="RemoveRuleAppBarButton.Label" xml:space="preserve">
+    <value>Премахни правило Rule</value>
+  </data>
+  <data name="SettingsMenuItem.Text" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="SettingsTitle.Text" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="StartupSetting.Description" xml:space="preserve">
+    <value>Стартирайте това приложение автоматично заедно с компютъра.</value>
+  </data>
+  <data name="StartupSetting.Header" xml:space="preserve">
+    <value>Пусни при стартиране</value>
+  </data>
+  <data name="SystemMenuItem.Text" xml:space="preserve">
+    <value>Системно</value>
+  </data>
+  <data name="SystemTitlebarColorDescription.Text" xml:space="preserve">
+    <value>Системата използва предпочитанията ви за тема.</value>
+  </data>
+  <data name="TabbedBackdropDescription.Text" xml:space="preserve">
+    <value>Tабулацията принуждава всички приложения да използват ефекта на размазан фон на тапет.</value>
+  </data>
+  <data name="TabbedMenuItem.Text" xml:space="preserve">
+    <value>Табулация</value>
+  </data>
+  <data name="TelegramButton.Content" xml:space="preserve">
+    <value>Телеграм</value>
+  </data>
+  <data name="TitlebarColorDescription.Text" xml:space="preserve">
+    <value>Задай цветова тема на заглавните ленти,</value>
+  </data>
+  <data name="TitlebarColorMenu.Text" xml:space="preserve">
+    <value>Заглавна лента Color</value>
+  </data>
+  <data name="TitleBarColorSetting.Header" xml:space="preserve">
+    <value>Цвят на заглавната лента</value>
+  </data>
+  <data name="TrayIconTooltip.Content" xml:space="preserve">
+    <value>Мика за всеки</value>
+  </data>
+  <data name="TwitterButton.Content" xml:space="preserve">
+    <value>Х</value>
+  </data>
+  <data name="UnhandledException.Header" xml:space="preserve">
+    <value>Необработено изключение</value>
+  </data>
+  <data name="UnhandledUIException.Header" xml:space="preserve">
+    <value>Необработено изключение в потребителския интерфейс</value>
+  </data>
+  <data name="UnsupportedBackdropDescription.Text" xml:space="preserve">
+    <value>Ефектите за акрилни фонове и фонове с табла изискват поне Windows build 22523.</value>
+  </data>
+  <data name="UnsupportedImmersiveDarkModeDescription.Text" xml:space="preserve">
+    <value>Тъмният режим на потапяне изисква поне Windows build 19041.</value>
+  </data>
+  <data name="UnsupportedMicaDescription.Text" xml:space="preserve">
+    <value>Ефектът Мика изисква поне Windows build 22000.</value>
+  </data>
+  <data name="VersionLabel.Text" xml:space="preserve">
+    <value>Версия</value>
+  </data>
+  <data name="AdvancedSetting.Header" xml:space="preserve">
+    <value>За напреднали</value>
+  </data>
+  <data name="ConfigFileSetting.Header" xml:space="preserve">
+    <value>Файл за конфигуриране</value>
+  </data>
+  <data name="StyleSetting.Header" xml:space="preserve">
+    <value>Стил</value>
+  </data>
+  <data name="OpenInEditorSetting.Description" xml:space="preserve">
+    <value>Отворете файла с конфигурацията в текстовия редактор по подразбиране.</value>
+  </data>
+  <data name="OpenInEditorSetting.Header" xml:space="preserve">
+    <value>Редактиране в текстов редактор</value>
+  </data>
+  <data name="ReloadSetting.Description" xml:space="preserve">
+    <value>Презареждане на правилата от конфигурационния файл и прилагането им към всички отворени прозорци.</value>
+  </data>
+  <data name="ReloadSetting.Header" xml:space="preserve">
+    <value>Презареди</value>
+  </data>
+  <data name="ResetSetting.Description" xml:space="preserve">
+    <value>Възстановяване на правилата по подразбиране и изтриване на всички промени.</value>
+  </data>
+  <data name="ResetSetting.Header" xml:space="preserve">
+    <value>Презареди</value>
+  </data>
+  <data name="Credit.Text" xml:space="preserve">
+    <value>От</value>
+  </data>
+  <data name="IconCredit.Text" xml:space="preserve">
+    <value>Икона от:</value>
+  </data>
+  <data name="TranslatorsCredit.Text" xml:space="preserve">
+    <value>Превод от:</value>
+  </data>
+  <data name="CornerMenu.Text" xml:space="preserve">
+    <value>Ъглов режим</value>
+  </data>
+  <data name="CornerPreferenceSetting.Header" xml:space="preserve">
+    <value>Ъглов режим</value>
+  </data>
+  <data name="SquareMenuItem.Text" xml:space="preserve">
+    <value>Квадрат</value>
+  </data>
+  <data name="RoundedMenuItem.Text" xml:space="preserve">
+    <value>Заоблени</value>
+  </data>
+  <data name="RoundedSmallMenuItem.Text" xml:space="preserve">
+    <value>Леко заоблени</value>
+  </data>
+  <data name="CornerDescription.Text" xml:space="preserve">
+    <value>Задаване на режим на заоблянето на ъглите,</value>
+  </data>
+  <data name="DefaultCornerDescription.Text" xml:space="preserve">
+    <value>Подразбиране не се прави нищо, с цел да се запази предпочитаният от приложението режим на закръгляне на ъглите.</value>
+  </data>
+  <data name="SquareCornerDescription.Text" xml:space="preserve">
+    <value>Квадратният режим деактивира заоблянето на ъглите.</value>
+  </data>
+  <data name="RoundedCornerDescription.Text" xml:space="preserve">
+    <value>Заоблени кара ъглите да са заоблени.</value>
+  </data>
+  <data name="RoundedSmallCornerDescription.Text" xml:space="preserve">
+    <value>Леко заобленият режим е по средата между квадратните и заоблените ъгли.</value>
+  </data>
+  <data name="AdminStartupSetting.Description" xml:space="preserve">
+    <value>Стартирайте това приложение автоматично като администратор при стартиране. За да активирате тази опция, трябва да стартирате приложението като администратор.</value>
+  </data>
+  <data name="AdminStartupSetting.Header" xml:space="preserve">
+    <value>Изпълнени като администратор при стартиране</value>
+  </data>
+  <data name="ContributorsLabel.Text" xml:space="preserve">
+    <value>Доброволци:</value>
+  </data>
+  <data name="TrayIconVisibilitySetting.Description" xml:space="preserve">
+    <value>Показване на иконата на приложението в зоната за известия</value>
+  </data>
+  <data name="TrayIconVisibilitySetting.Header" xml:space="preserve">
+    <value>Показване на икона в таблата</value>
+  </data>
+  <data name="ExitSetting.Header" xml:space="preserve">
+    <value>Изход</value>
+  </data>
+  <data name="DiscordButton.Content" xml:space="preserve">
+    <value>Discord</value>
+  </data>
+</root>
