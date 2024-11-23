@@ -14,10 +14,10 @@ public partial class AddProcessRuleContentDialogViewModel : ObservableObject
 {
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsAddButtonEnabled))]
-    private string _processName = string.Empty;
+    public partial string ProcessName { get; set; }
 
     [ObservableProperty]
-    private ObservableCollection<string> _recommendations;
+    public partial ObservableCollection<string> Recommendations { get; set; }
 
     public bool IsAddButtonEnabled => !string.IsNullOrWhiteSpace(ProcessName);
 
@@ -26,7 +26,8 @@ public partial class AddProcessRuleContentDialogViewModel : ObservableObject
     public AddProcessRuleContentDialogViewModel(ISettingsService settingsService)
     {
         _settingsService = settingsService;
-        _recommendations = new ObservableCollection<string>();
+        ProcessName = string.Empty;
+        Recommendations = new ObservableCollection<string>();
     }
 
     public void RequestSuggestions()

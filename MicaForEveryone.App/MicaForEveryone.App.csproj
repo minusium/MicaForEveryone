@@ -14,6 +14,7 @@
 		<UseWinUI>true</UseWinUI>
 		<EnableMsixTooling>true</EnableMsixTooling>
 		<SelfContained>true</SelfContained>
+		<LangVersion>preview</LangVersion>
 		
 		<!-- Enable AOT publishing on F5 -->
 		
@@ -40,11 +41,14 @@
 		<!-- Enable size inspection using sizoscope -->
 		<IlcGenerateMstatFile>true</IlcGenerateMstatFile>
 		<IlcGenerateDgmlFile>true</IlcGenerateDgmlFile>
+
+		<!-- False positives -->
+		<NoWarn>WMC1506</NoWarn>
 		
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Labs.Extensions.DependencyInjection" Version="0.1.240823-build.1737" />
+		<PackageReference Include="CommunityToolkit.Labs.Extensions.DependencyInjection" Version="0.1.241113-build.1784" />
 		<PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.2.241112-preview1" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
 		<PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />

@@ -7,6 +7,9 @@
     <Platforms>x64;ARM64;x86</Platforms>
 	<WindowsSdkPackageVersion>10.0.22621.56</WindowsSdkPackageVersion>
     <LangVersion>preview</LangVersion>
+
+    <!-- Disable INotifyPropertyChanging support (code bloat as we don't use it') -->
+    <MvvmToolkitEnableINotifyPropertyChangingSupport>false</MvvmToolkitEnableINotifyPropertyChangingSupport>
   </PropertyGroup>
 
   <ItemGroup>

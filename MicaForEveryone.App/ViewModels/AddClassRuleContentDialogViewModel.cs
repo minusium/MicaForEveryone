@@ -13,10 +13,10 @@ public partial class AddClassRuleContentDialogViewModel : ObservableObject
 {
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsAddButtonEnabled))]
-    private string _className = string.Empty;
+    public partial string ClassName { get; set; }
 
     [ObservableProperty]
-    private IEnumerable<string>? _recommendations;
+    public partial IEnumerable<string>? Recommendations { get; set; }
 
     public bool IsAddButtonEnabled => !string.IsNullOrWhiteSpace(ClassName);
 
@@ -25,6 +25,7 @@ public partial class AddClassRuleContentDialogViewModel : ObservableObject
     public AddClassRuleContentDialogViewModel(ISettingsService settingsService)
     {
         _settingsService = settingsService;
+        ClassName = string.Empty;
     }
 
     [RelayCommand]
