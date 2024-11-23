@@ -18,7 +18,7 @@
 		<!-- Enable AOT publishing on F5 -->
 		
 		<PublishAot>true</PublishAot>
-		<!--<IncludePublishItemsOutputGroup>true</IncludePublishItemsOutputGroup>-->
+		<IncludePublishItemsOutputGroup Condition="'$(Configuration)' == 'Release'">true</IncludePublishItemsOutputGroup>
 		
 		<!-- App-specific settings -->
 		
@@ -28,7 +28,7 @@
 
 		<!-- C#/WinRT AOT compliance -->
 
-		<WindowsSdkPackageVersion>10.0.22621.44</WindowsSdkPackageVersion>
+		<WindowsSdkPackageVersion>10.0.22621.56</WindowsSdkPackageVersion>
 		<CsWinRTRcwFactoryFallbackGeneratorForceOptOut>true</CsWinRTRcwFactoryFallbackGeneratorForceOptOut>
 		<WarnAsError>CsWinRT1028;CsWinRT1029</WarnAsError>
 		<CsWinRTIIDOptimizerOptOut>true</CsWinRTIIDOptimizerOptOut>
@@ -49,7 +49,7 @@
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
 		<PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" />
-		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240923002" />
+		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.241114003" />
 		<Manifest Include="$(ApplicationManifest)" />
 	</ItemGroup>
 

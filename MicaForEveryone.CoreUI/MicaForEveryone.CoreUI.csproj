@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Platforms>x64;x86;ARM64</Platforms>
-    <WindowsSdkPackageVersion>10.0.22621.44</WindowsSdkPackageVersion>
+    <WindowsSdkPackageVersion>10.0.22621.56</WindowsSdkPackageVersion>
   </PropertyGroup>
 
   <ItemGroup>

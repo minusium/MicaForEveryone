@@ -1,4 +1,5 @@
-﻿using MicaForEveryone.PInvoke;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using MicaForEveryone.PInvoke;
 using System.Runtime.InteropServices;
 
 namespace MicaForEveryone.Models;
