@@ -5,16 +5,16 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
-using static MicaForEveryone.PInvoke.Generic;
-using static MicaForEveryone.PInvoke.Windowing;
-using static MicaForEveryone.PInvoke.Events;
-using static MicaForEveryone.PInvoke.Modules;
-using System;
+using TerraFX.Interop.Windows;
+using static TerraFX.Interop.Windows.Windows;
 
 namespace MicaForEveryone.App.Services;
 
 public sealed class RuleService : IRuleService
 {
+    [DllImport("user32")]
+    private static extern BOOL IsTopLevelWindow(HWND hWnd);
+
     private readonly ISettingsService _settingsService;
     private HWINEVENTHOOK _eventHookHandler;
 
@@ -27,7 +27,7 @@ public sealed class RuleService : IRuleService
 
     public unsafe void Initialize()
     {
-        _eventHookHandler = SetWinEventHook(EVENT_OBJECT_SHOW, EVENT_OBJECT_SHOW, HINSTANCE.NULL, &NewWindowShown, 0, 0, WINEVENT_OUTOFCONTEXT);
+        _eventHookHandler = SetWinEventHook(EVENT.EVENT_OBJECT_SHOW, EVENT.EVENT_OBJECT_SHOW, HMODULE.NULL, &NewWindowShown, 0, 0, WINEVENT_OUTOFCONTEXT);
         _settingsService.PropertyChanged += _settingsService_PropertyChanged;
     }
 
@@ -76,28 +76,28 @@ public sealed class RuleService : IRuleService
 
         return BOOL.TRUE;
     }
-
+    
     private static unsafe bool IsWindowEligible(HWND hWnd)
     {
         if (!IsWindowVisible(hWnd))
             return false;
 
-        WindowStylesEx styleEx = (WindowStylesEx)GetWindowLongPtrW(hWnd, WindowLongIndex.GWL_EXSTYLE);
+        nint styleEx = GetWindowLongPtrW(hWnd, GWL.GWL_EXSTYLE);
 
-        WindowStyles style = (WindowStyles)GetWindowLongPtrW(hWnd, WindowLongIndex.GWL_STYLE);
+        nint style = GetWindowLongPtrW(hWnd, GWL.GWL_STYLE);
 
-        if (styleEx.HasFlag(WindowStylesEx.WS_EX_NOACTIVATE))
+        if ((styleEx & WS.WS_EX_NOACTIVATE) == WS.WS_EX_NOACTIVATE)
             return false;
 
         if (IsTopLevelWindow(hWnd) == BOOL.FALSE)
             return false;
 
-        bool hasTitleBar = style.HasFlag(WindowStyles.WS_BORDER) && style.HasFlag(WindowStyles.WS_DLGFRAME);
+        bool hasTitleBar = (style & WS.WS_BORDER) == WS.WS_BORDER && (style & WS.WS_DLGFRAME) == WS.WS_DLGFRAME;
 
-        if (styleEx.HasFlag(WindowStylesEx.WS_EX_TOOLWINDOW) && !hasTitleBar)
+        if ((styleEx & WS.WS_EX_TOOLWINDOW) == WS.WS_EX_TOOLWINDOW && !hasTitleBar)
             return false;
 
-        if (style.HasFlag(WindowStyles.WS_POPUP) & !hasTitleBar)
+        if ((style & WS.WS_POPUP) == WS.WS_POPUP & !hasTitleBar)
             return false;
 
         return true;
@@ -115,6 +115,7 @@ public sealed class RuleService : IRuleService
             uint bp = (uint)mostApplicableRule.BackdropPreference;
             unsafe
             {
+                const uint DWMWA_SYSTEMBACKDROP_TYPE = 38;
                 DwmSetWindowAttribute(hWnd, DWMWA_SYSTEMBACKDROP_TYPE, &bp, sizeof(uint));
             }
         }

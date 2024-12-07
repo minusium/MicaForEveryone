@@ -1,5 +1,6 @@
-﻿using MicaForEveryone.PInvoke;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using TerraFX.Interop.Windows;
+using static TerraFX.Interop.Windows.Windows;
 
 namespace MicaForEveryone.Models;
 
@@ -15,10 +16,10 @@ public sealed partial class ProcessRule : Rule
             && base.Equals(other);
     }
 
-    public override unsafe bool IsRuleApplicable(Windowing.HWND hWnd)
+    public override unsafe bool IsRuleApplicable(HWND hWnd)
     {
         uint processId = 0;
-        if (Windowing.GetWindowThreadProcessId(hWnd, &processId) == 0)
+        if (GetWindowThreadProcessId(hWnd, &processId) == 0)
         {
             return false;
         }

@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Text.Json.Serialization;
-using static MicaForEveryone.PInvoke.Windowing;
+using TerraFX.Interop.Windows;
 
 namespace MicaForEveryone.Models;
 

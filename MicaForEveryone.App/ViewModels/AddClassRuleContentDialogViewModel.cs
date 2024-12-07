@@ -3,8 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using MicaForEveryone.CoreUI;
 using MicaForEveryone.Models;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MicaForEveryone.App.ViewModels;

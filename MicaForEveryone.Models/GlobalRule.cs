@@ -1,6 +1,4 @@
-﻿using MicaForEveryone.PInvoke;
-
-namespace MicaForEveryone.Models;
+﻿namespace MicaForEveryone.Models;
 
 public sealed partial class GlobalRule : Rule
 {
@@ -11,5 +9,5 @@ public sealed partial class GlobalRule : Rule
             && base.Equals(other);
     }
 
-    public override bool IsRuleApplicable(Windowing.HWND hWnd) => true;
+    public override bool IsRuleApplicable(TerraFX.Interop.Windows.HWND hWnd) => true;
 }

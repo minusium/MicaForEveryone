@@ -2,18 +2,11 @@
 using Microsoft.UI;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Hosting;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System;
 using Windows.Foundation;
-using static MicaForEveryone.PInvoke.GDI;
-using static MicaForEveryone.PInvoke.Generic;
-using static MicaForEveryone.PInvoke.Macros;
-using static MicaForEveryone.PInvoke.Messaging;
-using static MicaForEveryone.PInvoke.Modules;
-using static MicaForEveryone.PInvoke.Monitor;
-using static MicaForEveryone.PInvoke.NotifyIcon;
-using static MicaForEveryone.PInvoke.Windowing;
+using TerraFX.Interop.Windows;
+using static TerraFX.Interop.Windows.Windows;
 using WinRT.Interop;
 
 namespace MicaForEveryone.App.Services;
@@ -28,19 +21,19 @@ public sealed unsafe class MainAppService
     {
         HINSTANCE instance = GetModuleHandleW(null);
         HICON largeIcon, smallIcon;
-        LoadIconMetric(instance, IDI_APPLICATION, LIM_LARGE, &largeIcon);
-        LoadIconMetric(instance, IDI_APPLICATION, LIM_SMALL, &smallIcon);
+        LoadIconMetric(instance, IDI.IDI_APPLICATION, (int)_LI_METRIC.LIM_LARGE, &largeIcon);
+        LoadIconMetric(instance, IDI.IDI_APPLICATION, (int)_LI_METRIC.LIM_SMALL, &smallIcon);
 
         fixed (char* lpClassName = "MicaForEveryoneNotificationIcon")
         {
             WNDCLASSEXW wndClass = new()
             {
                 cbSize = (uint)sizeof(WNDCLASSEXW),
-                style = WindowClassStyles.CS_HREDRAW | WindowClassStyles.CS_VREDRAW,
+                style = CS.CS_HREDRAW | CS.CS_VREDRAW,
                 lpfnWndProc = &WindowProc,
                 hInstance = instance,
                 hCursor = HCURSOR.NULL,
-                lpszClassName = (ushort*)lpClassName,
+                lpszClassName = lpClassName,
                 lpszMenuName = null,
                 hIcon = largeIcon,
                 hIconSm = smallIcon,
@@ -52,7 +45,11 @@ public sealed unsafe class MainAppService
             RegisterClassExW(&wndClass);
         }
         nint gcHandlePtr = GCHandle.ToIntPtr(GCHandle.Alloc(this));
-        _mainWnd = CreateWindowExW(WindowStylesEx.WS_EX_NOACTIVATE | WindowStylesEx.WS_EX_TOPMOST, "MicaForEveryoneNotificationIcon", null, WindowStyles.WS_POPUPWINDOW, 0, 0, 0, 0, HWND.NULL, null, instance, gcHandlePtr.ToPointer());
+
+        fixed (char* lpWindowTitle = "MicaForEveryoneNotificationIcon")
+        {
+            _mainWnd = CreateWindowExW(WS.WS_EX_NOACTIVATE | WS.WS_EX_TOPMOST, lpWindowTitle, null, WS.WS_POPUPWINDOW, 0, 0, 0, 0, HWND.NULL, HMENU.NULL, instance, gcHandlePtr.ToPointer());
+        }
         var rgn = CreateRectRgn(0, 0, 0, 0);
         SetWindowRgn(_mainWnd, rgn, false);
         // We have to show the window, or it crashes.
@@ -82,7 +79,7 @@ public sealed unsafe class MainAppService
             case 1:
                 {
                     HICON smallIcon;
-                    LoadIconMetric(GetModuleHandleW(null), IDI_APPLICATION, LIM_SMALL, &smallIcon);
+                    LoadIconMetric(GetModuleHandleW(null), IDI.IDI_APPLICATION, (int)_LI_METRIC.LIM_SMALL, &smallIcon);
 
                     CREATESTRUCTW* lpCreateStruct = (CREATESTRUCTW*)&lParam;
                     nint gcHandlePtr = *(nint*)lpCreateStruct->lpCreateParams;
@@ -95,27 +92,27 @@ public sealed unsafe class MainAppService
                     appService._source.SiteBridge.ResizePolicy = Microsoft.UI.Content.ContentSizePolicy.ResizeContentToParentWindow;
                     appService._source.SiteBridge.Show();
 
-                    SetWindowLongPtrW(hWnd, WindowLongIndex.GWL_USERDATA, gcHandlePtr);
+                    SetWindowLongPtrW(hWnd, GWL.GWL_USERDATA, gcHandlePtr);
 
                     NOTIFYICONDATAW notifyIconData = new();
                     notifyIconData.hWnd = hWnd;
-                    notifyIconData.uID = 1;
+                    notifyIconData.guidItem = new Guid([0xA0, 0x23, 0x5A, 0x9F, 0xC6, 0xB6, 0x41, 0x89, 0xAE, 0x4B, 0xAC, 0x00, 0x9F, 0xC6, 0x78, 0x7C]);
                     notifyIconData.cbSize = (uint)sizeof(NOTIFYICONDATAW);
                     notifyIconData.hIcon = smallIcon;
                     notifyIconData.uVersion = 4;
-                    notifyIconData.uCallbackMessage = WM_APP + 1;
+                    notifyIconData.uCallbackMessage = WM.WM_APP + 1;
 
                     // Currently, we can't show a tool tip for the app name,
                     // so we just tell Windows to show it for us.
                     // It might look a bit ugly, but it works.
-                    notifyIconData.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
-                    "Mica For Everyone".CopyTo(MemoryMarshal.Cast<ushort, char>(MemoryMarshal.CreateSpan(ref notifyIconData.szTip[0], 128)));
+                    notifyIconData.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP | NIF_GUID;
+                    "Mica For Everyone".CopyTo(MemoryMarshal.CreateSpan(ref notifyIconData.szTip[0], 128));
                     Shell_NotifyIconW(NIM_ADD, &notifyIconData);
                     Shell_NotifyIconW(NIM_SETVERSION, &notifyIconData);
                     break;
                 }
 
-            case WM_APP + 1:
+            case WM.WM_APP + 1:
                 {
                     RECT iconRect;
                     NOTIFYICONIDENTIFIER id = new NOTIFYICONIDENTIFIER()
@@ -125,7 +122,7 @@ public sealed unsafe class MainAppService
                         hWnd = hWnd
                     };
                     Shell_NotifyIconGetRect(&id, &iconRect);
-                    HMONITOR monitor = MonitorFromRect(&iconRect, MONITOR_DEFAULTTONULL);
+                    HMONITOR monitor = MonitorFromRect(&iconRect, MONITOR.MONITOR_DEFAULTTONULL);
                     MONITORINFO monitorInfo;
                     bool monitorSuccessful = false;
                     int? workBottom = null;
@@ -134,15 +131,15 @@ public sealed unsafe class MainAppService
                         if ((workBottom = monitorInfo.rcWork.bottom) < iconRect.bottom)
                             iconRect.top = workBottom.Value - 1;
 
-                    SetWindowPos(hWnd, HWND.NULL, iconRect.left, iconRect.top, iconRect.right - iconRect.left, iconRect.bottom - iconRect.left, SWP_NOACTIVATE | SWP_NOZORDER);
+                    SetWindowPos(hWnd, HWND.NULL, iconRect.left, iconRect.top, iconRect.right - iconRect.left, iconRect.bottom - iconRect.left, SWP.SWP_NOACTIVATE | SWP.SWP_NOZORDER);
 
-                    var pointer = GetWindowLongPtrW(hWnd, WindowLongIndex.GWL_USERDATA);
+                    var pointer = GetWindowLongPtrW(hWnd, GWL.GWL_USERDATA);
                     var gc = GCHandle.FromIntPtr(pointer);
                     var appService = (MainAppService)(gc.Target!);
 
                     switch (LOWORD(lParam))
                     {
-                        case WM_CONTEXTMENU:
+                        case WM.WM_CONTEXTMENU:
                             var scaleFactor = GetDpiForWindow(hWnd) / 96f;
                             SetForegroundWindow(hWnd);
 
@@ -169,15 +166,9 @@ public sealed unsafe class MainAppService
                     break;
                 }
 
-            case WM_DESTROY:
+            case WM.WM_DESTROY:
                 {
-                    NOTIFYICONDATAW notifyIconData = new();
-                    notifyIconData.hWnd = hWnd;
-                    notifyIconData.uID = 1;
-                    notifyIconData.cbSize = (uint)sizeof(NOTIFYICONDATAW);
-                    Shell_NotifyIconW(NIM_DELETE, &notifyIconData);
-
-                    var pointer = GetWindowLongPtrW(hWnd, WindowLongIndex.GWL_USERDATA);
+                    var pointer = GetWindowLongPtrW(hWnd, GWL.GWL_USERDATA);
                     var gc = GCHandle.FromIntPtr(pointer);
                     var appService = (MainAppService)(gc.Target!);
                     appService._source?.Dispose();

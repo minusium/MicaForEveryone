@@ -1,6 +1,4 @@
-﻿using static MicaForEveryone.PInvoke.Windowing;
-
-namespace MicaForEveryone.CoreUI;
+﻿namespace MicaForEveryone.CoreUI;
 
 public interface IRuleService
 {
@@ -8,5 +6,5 @@ public interface IRuleService
 
     Task ApplyRulesToAllWindowsAsync();
 
-    Task ApplyRuleToWindowAsync(HWND hwnd);
+    Task ApplyRuleToWindowAsync(TerraFX.Interop.Windows.HWND hwnd);
 }

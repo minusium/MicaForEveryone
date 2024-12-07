@@ -1,23 +1,38 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentDialog
     x:Class="MicaForEveryone.App.Views.AddProcessRuleContentDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:MicaForEveryone.App.Views"
+    xmlns:controls="using:MicaForEveryone.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:MicaForEveryone.App.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
     Title="_Add Process Rule"
-    PrimaryButtonText="_Add rule"
     CloseButtonText="_Close"
     DefaultButton="Primary"
     IsPrimaryButtonEnabled="{x:Bind ViewModel.IsAddButtonEnabled, Mode=OneWay}"
-    PrimaryButtonCommand="{x:Bind ViewModel.AddRuleCommand}">
+    PrimaryButtonCommand="{x:Bind ViewModel.AddRuleCommand}"
+    PrimaryButtonText="_Add rule"
+    mc:Ignorable="d">
 
     <ContentDialog.Style>
-        <Style TargetType="local:AddProcessRuleContentDialog" BasedOn="{StaticResource DefaultContentDialogStyle}" />
+        <Style BasedOn="{StaticResource DefaultContentDialogStyle}" TargetType="local:AddProcessRuleContentDialog" />
     </ContentDialog.Style>
 
-    <AutoSuggestBox PlaceholderText="_Enter a process name" TextChanged="AutoSuggestBox_TextChanged" Text="{x:Bind ViewModel.ProcessName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{x:Bind ViewModel.Recommendations, Mode=OneWay}" />
+    <Grid ColumnSpacing="8">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <AutoSuggestBox
+            ItemsSource="{x:Bind ViewModel.Recommendations, Mode=OneWay}"
+            PlaceholderText="_Enter a process name"
+            Text="{x:Bind ViewModel.ProcessName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            TextChanged="AutoSuggestBox_TextChanged" />
+        <controls:WindowPickerButton Grid.Column="1" WindowChanged="WindowPickerButton_WindowChanged">
+            <FontIcon Glyph="&#xF7ED;" />
+        </controls:WindowPickerButton>
+    </Grid>
+
 
 </ContentDialog>

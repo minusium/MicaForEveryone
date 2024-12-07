@@ -1,6 +1,6 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using MicaForEveryone.PInvoke;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
+using TerraFX.Interop.Windows;
+using static TerraFX.Interop.Windows.Windows;
 
 namespace MicaForEveryone.Models;
 
@@ -16,10 +16,10 @@ public sealed partial class ClassRule : Rule
             && base.Equals(other);
     }
 
-    public override unsafe bool IsRuleApplicable(Windowing.HWND hWnd)
+    public override unsafe bool IsRuleApplicable(HWND hWnd)
     {
         char* lpClassName = stackalloc char[256];
-        if (Windowing.GetClassNameW(hWnd, lpClassName, 256) == 0)
+        if (GetClassNameW(hWnd, lpClassName, 256) == 0)
         {
             return false;
         }

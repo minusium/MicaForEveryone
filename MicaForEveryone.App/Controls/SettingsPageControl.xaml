@@ -13,6 +13,8 @@
         </Style.Setters>
     </Style>
 
+    <x:Double x:Key="SettingsCardSpacing">3</x:Double>
+
     <Style TargetType="local:SettingsPageControl">
 
         <Setter Property="Padding" Value="20,20,20,0" />

@@ -44,8 +44,13 @@
 
 		<!-- False positives -->
 		<NoWarn>WMC1506</NoWarn>
-		
+		<AssemblyTitle>Mica For Everyone</AssemblyTitle>
+		<ProductName>Mica For Everyone</ProductName>
+		<Description>Mica For Everyone</Description>
 	</PropertyGroup>
+	<ItemGroup>
+	  <None Remove="Controls\WindowPickerButton.xaml" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Labs.Extensions.DependencyInjection" Version="0.1.241113-build.1784" />
@@ -69,7 +74,12 @@
 	<ItemGroup>
 		<ProjectReference Include="..\MicaForEveryone.CoreUI\MicaForEveryone.CoreUI.csproj" />
 		<ProjectReference Include="..\MicaForEveryone.Models\MicaForEveryone.Models.csproj" />
-		<ProjectReference Include="..\MicaForEveryone.PInvoke\MicaForEveryone.PInvoke.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Page Update="Controls\WindowPickerButton.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 
 	<!--

@@ -3,21 +3,19 @@
     x:Class="MicaForEveryone.App.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:MicaForEveryone.App.Controls"
     xmlns:local="using:MicaForEveryone.App">
     <Application.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
-                <!--  Other merged dictionaries here  -->
-                <ResourceDictionary Source="Controls/SettingsPageControl.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-            <!--  Other app resources here  -->
-
-            <Style TargetType="FontIcon">
-                <Setter Property="FontFamily" Value="{StaticResource SymbolThemeFontFamily}" />
-            </Style>
-
-            <x:Double x:Key="SettingsCardSpacing">3</x:Double>
-        </ResourceDictionary>
+        <XamlControlsResources>
+            <XamlControlsResources.MergedDictionaries>
+                <ResourceDictionary Source="/Controls/SettingsPageControl.xaml" />
+                <ResourceDictionary Source="/Controls/WindowPickerButton.xaml" />
+                <ResourceDictionary>
+                    <Style TargetType="FontIcon">
+                        <Setter Property="FontFamily" Value="{StaticResource SymbolThemeFontFamily}" />
+                    </Style>
+                </ResourceDictionary>
+            </XamlControlsResources.MergedDictionaries>
+        </XamlControlsResources>
     </Application.Resources>
 </Application>
