@@ -1,21 +1,10 @@
 using MicaForEveryone.App.ViewModels;
 using MicaForEveryone.Models;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using WinRT.Interop;
+using Windows.UI;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -54,10 +43,11 @@ public sealed partial class SettingsWindow : Window
         _addNewItemFlyout.Items.Add(classRuleItem);
 
         ViewModel = App.Services.GetRequiredService<SettingsViewModel>();
+
         ExtendsContentIntoTitleBar = true;
-
+        AppWindow.TitleBar.ButtonBackgroundColor = AppWindow.TitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+        ChangeButtonBackground();
         Title = "_Mica For Everyone Settings";
-
         AppWindow.SetIcon("Assets\\MicaForEveryone.ico");
     }
 
@@ -86,6 +76,28 @@ public sealed partial class SettingsWindow : Window
             _contentFrame.Navigate(typeof(AppSettingsPage));
         }
     }
+
+    private void Window_Activated(object sender, WindowActivatedEventArgs args)
+    {
+        if (args.WindowActivationState == WindowActivationState.Deactivated)
+        {
+            VisualStateManager.GoToState(RootPage, "TitleBarInactivated", false);
+        }
+        else
+        {
+            VisualStateManager.GoToState(RootPage, "TitleBarActive", false);
+        }
+
+    }
+
+    private void ChangeButtonBackground()
+    {
+        AppWindow.TitleBar.ButtonHoverBackgroundColor = (Color)Application.Current.Resources["SubtleFillColorSecondary"];
+        AppWindow.TitleBar.ButtonPressedBackgroundColor = (Color)Application.Current.Resources["SubtleFillColorTertiary"];
+        AppWindow.TitleBar.ButtonForegroundColor = AppWindow.TitleBar.ButtonHoverForegroundColor = (Color)Application.Current.Resources["TextFillColorPrimary"];
+    }
+
+    private void RootPage_ActualThemeChanged(FrameworkElement sender, object args) => ChangeButtonBackground();
 }
 public partial class SettingsNavigationItem
 {

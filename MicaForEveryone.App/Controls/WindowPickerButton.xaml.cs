@@ -54,6 +54,13 @@ public sealed partial class WindowPickerButton : Button
         GetCursorPos(&point);
         HWND window = WindowFromPoint(point);
         Window = GetAncestor(window, GA.GA_ROOT);
-        WindowChanged?.Invoke(this, Window);
+        if (Window == XamlRoot.ContentIslandEnvironment.AppWindowId.Value)
+        {
+            WindowChanged?.Invoke(this, HWND.NULL);
+        }
+        else
+        {
+            WindowChanged?.Invoke(this, Window);
+        }
     }
 }

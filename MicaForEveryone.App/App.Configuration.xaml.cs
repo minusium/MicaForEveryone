@@ -37,6 +37,7 @@ public partial class App
 
     [Singleton(typeof(MainAppService))]
     [Singleton(typeof(RuleService), [typeof(IRuleService)])]
+    [Singleton(typeof(ThemingService), [typeof(IThemingService)])]
     [Transient(typeof(SettingsViewModel))]
     [Transient(typeof(TrayIconViewModel))]
     [Transient(typeof(AddClassRuleContentDialogViewModel))]

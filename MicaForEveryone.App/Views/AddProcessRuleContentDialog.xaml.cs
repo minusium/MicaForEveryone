@@ -11,8 +11,6 @@ public sealed partial class AddProcessRuleContentDialog : ContentDialog
 {
     private AddProcessRuleContentDialogViewModel ViewModel { get; }
 
-    private bool capturing = false;
-
     public AddProcessRuleContentDialog()
     {
         this.InitializeComponent();
@@ -29,17 +27,17 @@ public sealed partial class AddProcessRuleContentDialog : ContentDialog
 
     private unsafe void WindowPickerButton_WindowChanged(Controls.WindowPickerButton sender, HWND window)
     {
+        if (window == HWND.NULL)
+        {
+            ViewModel.ProcessName = string.Empty;
+            return;
+        }
         uint procId;
         if (GetWindowThreadProcessId(window, &procId) == 0)
         {
             return;
         }
         Process proc = Process.GetProcessById((int)procId);
-        if (proc.ProcessName == Process.GetCurrentProcess().ProcessName)
-        {
-            ViewModel.ProcessName = string.Empty;
-            return;
-        }
         ViewModel.ProcessName = proc.ProcessName;
     }
 }

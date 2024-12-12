@@ -16,11 +16,14 @@ public sealed class RuleService : IRuleService
     private static extern BOOL IsTopLevelWindow(HWND hWnd);
 
     private readonly ISettingsService _settingsService;
+    private readonly IThemingService _themingService;
     private HWINEVENTHOOK _eventHookHandler;
 
-    public RuleService(ISettingsService settingsService)
+    public RuleService(ISettingsService settingsService, IThemingService themingService)
     {
         _settingsService = settingsService;
+        _themingService = themingService;
+        _themingService.ThemeChanged += (_, _) => _ = ApplyRulesToAllWindowsAsync();
     }
 
     private static int _currentSession;
@@ -110,6 +113,17 @@ public sealed class RuleService : IRuleService
 
         Rule mostApplicableRule = _settingsService.Settings!.Rules.Where(f => f.IsRuleApplicable(hWnd)).OrderByDescending(f => f is not GlobalRule).First();
 
+        if (mostApplicableRule.TitleBarColor != TitleBarColorMode.Default)
+        {
+            unsafe
+            {
+                const uint DWMWA_USE_IMMERSIVE_DARK_MODE = 20;
+                TitleBarColorMode normalizedTitleBarColorMode = mostApplicableRule.TitleBarColor == TitleBarColorMode.System ? _themingService.IsDarkMode() ? TitleBarColorMode.Dark : TitleBarColorMode.Light : mostApplicableRule.TitleBarColor;
+                uint useImmersiveDarkMode = (uint)(normalizedTitleBarColorMode == TitleBarColorMode.Dark ? 1 : 0);
+                DwmSetWindowAttribute(hWnd, DWMWA_USE_IMMERSIVE_DARK_MODE, &useImmersiveDarkMode, sizeof(uint));
+            }
+        }
+
         if (mostApplicableRule.BackdropPreference != BackdropType.Default)
         {
             uint bp = (uint)mostApplicableRule.BackdropPreference;
@@ -117,6 +131,16 @@ public sealed class RuleService : IRuleService
             {
                 const uint DWMWA_SYSTEMBACKDROP_TYPE = 38;
                 DwmSetWindowAttribute(hWnd, DWMWA_SYSTEMBACKDROP_TYPE, &bp, sizeof(uint));
+            }
+        }
+
+        if (mostApplicableRule.CornerPreference != CornerPreference.Default)
+        {
+            uint cp = (uint)mostApplicableRule.CornerPreference;
+            unsafe
+            {
+                const uint DWMWA_CORNER_PREFERENCE = 33;
+                DwmSetWindowAttribute(hWnd, DWMWA_CORNER_PREFERENCE, &cp, sizeof(uint));
             }
         }
 

@@ -22,6 +22,11 @@ public sealed partial class AddClassRuleContentDialog : ContentDialog
 
     private unsafe void WindowPickerButton_WindowChanged(Controls.WindowPickerButton sender, HWND window)
     {
+        if (window == HWND.NULL)
+        {
+            ViewModel.ClassName = string.Empty;
+            return;
+        }
         char* lpClassName = stackalloc char[256];
         if (GetClassNameW(window, lpClassName, 256) == 0)
         {

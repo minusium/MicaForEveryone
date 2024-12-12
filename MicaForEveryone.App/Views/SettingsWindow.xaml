@@ -10,6 +10,7 @@
     xmlns:local="using:MicaForEveryone.App.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:MicaForEveryone.Models"
+    Activated="Window_Activated"
     Closed="Window_Closed"
     mc:Ignorable="d">
 
@@ -17,94 +18,114 @@
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
-    <Grid x:Name="RootGrid">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="32" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
+    <Page x:Name="RootPage" ActualThemeChanged="RootPage_ActualThemeChanged">
+        <Grid x:Name="RootGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="32" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
 
-        <Grid.Resources>
-            <controls:IsDataTypeTemplateSelector x:Key="IsDataTypeTemplateSelector" Type="local:SettingsNavigationItem">
-                <controls:IsDataTypeTemplateSelector.IsType>
-                    <DataTemplate x:DataType="local:SettingsNavigationItem">
-                        <NavigationViewItem
-                            Content="{x:Bind Uid}"
-                            Icon="{x:Bind Icon}"
-                            SelectsOnInvoked="{x:Bind Selectable}"
-                            Tag="{x:Bind}" />
-                    </DataTemplate>
-                </controls:IsDataTypeTemplateSelector.IsType>
-                <controls:IsDataTypeTemplateSelector.IsNotType>
-                    <DataTemplate x:DataType="models:Rule">
-                        <NavigationViewItem Content="{x:Bind helpers:RuleInfoHelper.GetRuleName((models:Rule))}">
-                            <NavigationViewItem.Icon>
-                                <FontIcon Glyph="{x:Bind helpers:RuleInfoHelper.GetIcon((models:Rule))}" />
-                            </NavigationViewItem.Icon>
-                        </NavigationViewItem>
-                    </DataTemplate>
-                </controls:IsDataTypeTemplateSelector.IsNotType>
-            </controls:IsDataTypeTemplateSelector>
-        </Grid.Resources>
+            <Grid.Resources>
+                <controls:IsDataTypeTemplateSelector x:Key="IsDataTypeTemplateSelector" Type="local:SettingsNavigationItem">
+                    <controls:IsDataTypeTemplateSelector.IsType>
+                        <DataTemplate x:DataType="local:SettingsNavigationItem">
+                            <NavigationViewItem
+                                Content="{x:Bind Uid}"
+                                Icon="{x:Bind Icon}"
+                                SelectsOnInvoked="{x:Bind Selectable}"
+                                Tag="{x:Bind}" />
+                        </DataTemplate>
+                    </controls:IsDataTypeTemplateSelector.IsType>
+                    <controls:IsDataTypeTemplateSelector.IsNotType>
+                        <DataTemplate x:DataType="models:Rule">
+                            <NavigationViewItem Content="{x:Bind helpers:RuleInfoHelper.GetRuleName((models:Rule))}">
+                                <NavigationViewItem.Icon>
+                                    <FontIcon Glyph="{x:Bind helpers:RuleInfoHelper.GetIcon((models:Rule))}" />
+                                </NavigationViewItem.Icon>
+                            </NavigationViewItem>
+                        </DataTemplate>
+                    </controls:IsDataTypeTemplateSelector.IsNotType>
+                </controls:IsDataTypeTemplateSelector>
+            </Grid.Resources>
 
-        <StackPanel
-            Margin="8,0,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Orientation="Horizontal"
-            Spacing="8">
-            <Image
-                Width="16"
-                Height="16"
+            <StackPanel
+                Margin="8,0,0,0"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                Source="ms-appx:///Assets/Square44x44Logo.png" />
-            <TextBlock VerticalAlignment="Center" Style="{StaticResource CaptionTextBlockStyle}">
-                _Mica For Everyone
-            </TextBlock>
-        </StackPanel>
+                Orientation="Horizontal"
+                Spacing="8">
+                <Image
+                    Width="16"
+                    Height="16"
+                    VerticalAlignment="Center"
+                    Source="ms-appx:///Assets/Square44x44Logo.png" />
+                <TextBlock
+                    x:Name="CaptionTextBlock"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource CaptionTextBlockStyle}">
+                    _Mica For Everyone
+                </TextBlock>
+            </StackPanel>
 
-        <NavigationView
-            Grid.Row="1"
-            CompactModeThresholdWidth="0"
-            ExpandedModeThresholdWidth="0"
-            IsBackButtonVisible="Collapsed"
-            IsPaneOpen="True"
-            IsPaneToggleButtonVisible="False"
-            IsSettingsVisible="False"
-            ItemInvoked="NavigationView_ItemInvoked"
-            MenuItemTemplateSelector="{StaticResource IsDataTypeTemplateSelector}"
-            MenuItemsSource="{x:Bind ViewModel.SettingsService.Settings.Rules, Mode=OneWay}"
-            PaneDisplayMode="Left"
-            SelectionChanged="NavigationViewControl_SelectionChanged">
-            <NavigationView.Resources>
-                <Thickness x:Key="NavigationViewContentGridBorderThickness">0</Thickness>
-                <SolidColorBrush x:Key="NavigationViewContentBackground" Color="Transparent" />
-            </NavigationView.Resources>
-            <NavigationView.FooterMenuItems>
-                <local:SettingsNavigationItem
-                    Uid="_Add rule"
-                    Selectable="False"
-                    Tag="AddRuleNavViewItem">
-                    <local:SettingsNavigationItem.Icon>
-                        <SymbolIcon Symbol="Add" />
-                    </local:SettingsNavigationItem.Icon>
-                </local:SettingsNavigationItem>
-                <local:SettingsNavigationItem Uid="_Settings" Tag="SettingsNavViewItem">
-                    <local:SettingsNavigationItem.Icon>
-                        <AnimatedIcon>
-                            <AnimatedIcon.Source>
-                                <animatedVisuals:AnimatedSettingsVisualSource />
-                            </AnimatedIcon.Source>
-                            <AnimatedIcon.FallbackIconSource>
-                                <SymbolIconSource Symbol="Setting" />
-                            </AnimatedIcon.FallbackIconSource>
-                        </AnimatedIcon>
-                    </local:SettingsNavigationItem.Icon>
-                </local:SettingsNavigationItem>
-            </NavigationView.FooterMenuItems>
-            <NavigationView.Content>
-                <Frame x:Name="_contentFrame" />
-            </NavigationView.Content>
-        </NavigationView>
-    </Grid>
+            <NavigationView
+                Grid.Row="1"
+                CompactModeThresholdWidth="0"
+                ExpandedModeThresholdWidth="0"
+                IsBackButtonVisible="Collapsed"
+                IsPaneOpen="True"
+                IsPaneToggleButtonVisible="False"
+                IsSettingsVisible="False"
+                ItemInvoked="NavigationView_ItemInvoked"
+                MenuItemTemplateSelector="{StaticResource IsDataTypeTemplateSelector}"
+                MenuItemsSource="{x:Bind ViewModel.SettingsService.Settings.Rules, Mode=OneWay}"
+                PaneDisplayMode="Left"
+                SelectionChanged="NavigationViewControl_SelectionChanged">
+                <NavigationView.Resources>
+                    <Thickness x:Key="NavigationViewContentGridBorderThickness">0</Thickness>
+                    <SolidColorBrush x:Key="NavigationViewContentBackground" Color="Transparent" />
+                </NavigationView.Resources>
+                <NavigationView.FooterMenuItems>
+                    <local:SettingsNavigationItem
+                        Uid="_Add rule"
+                        Selectable="False"
+                        Tag="AddRuleNavViewItem">
+                        <local:SettingsNavigationItem.Icon>
+                            <SymbolIcon Symbol="Add" />
+                        </local:SettingsNavigationItem.Icon>
+                    </local:SettingsNavigationItem>
+                    <local:SettingsNavigationItem Uid="_Settings" Tag="SettingsNavViewItem">
+                        <local:SettingsNavigationItem.Icon>
+                            <AnimatedIcon>
+                                <AnimatedIcon.Source>
+                                    <animatedVisuals:AnimatedSettingsVisualSource />
+                                </AnimatedIcon.Source>
+                                <AnimatedIcon.FallbackIconSource>
+                                    <SymbolIconSource Symbol="Setting" />
+                                </AnimatedIcon.FallbackIconSource>
+                            </AnimatedIcon>
+                        </local:SettingsNavigationItem.Icon>
+                    </local:SettingsNavigationItem>
+                </NavigationView.FooterMenuItems>
+                <NavigationView.Content>
+                    <Frame x:Name="_contentFrame" />
+                </NavigationView.Content>
+            </NavigationView>
+
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup>
+                    <VisualState x:Name="TitleBarInactivated">
+                        <VisualState.Setters>
+                            <Setter Target="CaptionTextBlock.Foreground" Value="{ThemeResource TextFillColorTertiaryBrush}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="TitleBarActive">
+                        <VisualState.Setters>
+                            <Setter Target="CaptionTextBlock.Foreground" Value="{ThemeResource TextFillColorPrimaryBrush}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+        </Grid>
+    </Page>
 
 </Window>
