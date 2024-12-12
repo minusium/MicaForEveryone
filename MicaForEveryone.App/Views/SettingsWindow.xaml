@@ -19,7 +19,7 @@
     </Window.SystemBackdrop>
 
     <Page x:Name="RootPage" ActualThemeChanged="RootPage_ActualThemeChanged">
-        <Grid x:Name="RootGrid">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="32" />
                 <RowDefinition />
