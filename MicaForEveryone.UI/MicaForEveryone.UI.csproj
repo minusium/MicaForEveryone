@@ -188,11 +188,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <PRIResource Include="Strings\ar\Resources.resw">
-      <SubType>Designer</SubType>
-    </PRIResource>
     <PRIResource Include="Strings\az\Resources.resw">
-      <SubType>Designer</SubType>
+    <SubType>Designer</SubType>
     </PRIResource>
     <PRIResource Include="Strings\en\Resources.resw">
       <SubType>Designer</SubType>

@@ -440,6 +440,9 @@ namespace MicaForEveryone.Win32
             if (StyleEx.HasFlag(WindowStylesEx.WS_EX_NOACTIVATE))
                 return false;
 
+            if (!NativeMethods.IsTopLevelWindow(Handle))
+                return false;
+
             Style = GetWindowStyle();
             
             if (Style == 0)
@@ -452,10 +455,6 @@ namespace MicaForEveryone.Win32
                 return false;
 
             if (Style.HasFlag(WindowStyles.WS_POPUP) && !hasTitleBar)
-                return false;
-
-            var isTopLevelWindow = NativeMethods.GetAncestor(Handle, GetAncestorFlag.GA_PARENT) == NativeMethods.GetDesktopWindow();
-            if (!isTopLevelWindow && !StyleEx.HasFlag(WindowStylesEx.WS_EX_MDICHILD))
                 return false;
 
             return true;

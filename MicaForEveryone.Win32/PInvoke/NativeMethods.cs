@@ -189,9 +189,6 @@ namespace MicaForEveryone.Win32.PInvoke
         public static extern IntPtr GetWindowLongPtrW(IntPtr hWnd, int nIndex);
 
         [DllImport("user32.dll", SetLastError = false, ExactSpelling = true)]
-        public static extern IntPtr GetAncestor(IntPtr hwnd, GetAncestorFlag gaFlags);
-
-        [DllImport("user32.dll", SetLastError = false, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool EnumChildWindows(IntPtr hWndParent, EnumWindowsProc lpEnumFunc, IntPtr lParam);
 
@@ -204,6 +201,10 @@ namespace MicaForEveryone.Win32.PInvoke
         [DllImport("user32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool GetWindowPlacement(IntPtr hWnd, ref WINDOWPLACEMENT lpwndpl);
+
+        [DllImport("user32.dll", ExactSpelling = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool IsTopLevelWindow(IntPtr hWnd);
 
         /// <summary>
         /// Sets the show state and the restored, minimized, and maximized positions of the specified window.
