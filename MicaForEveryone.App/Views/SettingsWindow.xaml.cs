@@ -4,7 +4,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using System;
+using System.Runtime.InteropServices;
+using TerraFX.Interop.Windows;
 using Windows.UI;
+
+using static TerraFX.Interop.Windows.Windows;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -49,12 +54,34 @@ public sealed partial class SettingsWindow : Window
         ChangeButtonBackground();
         Title = "_Mica For Everyone Settings";
         AppWindow.SetIcon("Assets\\MicaForEveryone.ico");
+
+        unsafe
+        {
+            HWND hwnd = new HWND((void*)WinRT.Interop.WindowNative.GetWindowHandle(this));
+            SetWindowSubclass(hwnd, &WindowProc, 0, 0); 
+        }
     }
 
-    private unsafe void Window_Closed(object sender, WindowEventArgs args)
+    [UnmanagedCallersOnly]
+    private static unsafe LRESULT WindowProc(HWND hWND, uint arg2, WPARAM wPARAM, LPARAM lPARAM, nuint arg5, nuint arg6)
     {
-        args.Handled = true;
-        AppWindow.Hide();
+        if (arg2 == (uint)WM.WM_DESTROY)
+        {
+            LRESULT result = DefSubclassProc(hWND, arg2, wPARAM, lPARAM);
+            MSG msg;
+            while (PeekMessage(&msg, HWND.NULL, 0, 0, PM.PM_REMOVE))
+            {
+                if (msg.message != WM.WM_QUIT)
+                {
+                    TranslateMessage(&msg);
+                    DispatchMessage(&msg);
+                    continue;
+                }
+                break;
+            }
+            return result;
+        }
+        return DefSubclassProc(hWND, arg2, wPARAM, lPARAM);
     }
 
     private void NavigationView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
@@ -81,7 +108,12 @@ public sealed partial class SettingsWindow : Window
     {
         if (args.WindowActivationState == WindowActivationState.Deactivated)
         {
-            VisualStateManager.GoToState(RootPage, "TitleBarInactivated", false);
+            try
+            {
+                // This may cause an exception on closing, not sure why.
+                VisualStateManager.GoToState(RootPage, "TitleBarInactivated", false);
+            }
+            catch { }
         }
         else
         {

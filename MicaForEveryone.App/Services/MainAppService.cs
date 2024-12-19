@@ -54,20 +54,26 @@ public sealed unsafe class MainAppService
         SetWindowRgn(_mainWnd, rgn, false);
         // We have to show the window, or it crashes.
         ShowWindow(_mainWnd, 5);
-
-        _window = new SettingsWindow();
-        _window.AppWindow.Hide();
     }
 
     public void ActivateSettings()
     {
-        _window?.AppWindow.Show();
-        SetForegroundWindow(new((void*)WindowNative.GetWindowHandle(_window)));
+        try
+        {
+            _window ??= new SettingsWindow();
+            _window.Activate();
+        }
+        catch
+        {
+            // WinUI doesn't let us know whether a window has been closed or not.
+            _window = new SettingsWindow();
+            _window.Activate();
+        }
     }
 
     public void Shutdown()
     {
-        _window?.AppWindow.Destroy();
+        _window?.Close();
         DestroyWindow(_mainWnd);
     }
 
