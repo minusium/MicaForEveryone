@@ -58,7 +58,13 @@ public sealed partial class SettingsWindow : Window
         unsafe
         {
             HWND hwnd = new HWND((void*)WinRT.Interop.WindowNative.GetWindowHandle(this));
-            SetWindowSubclass(hwnd, &WindowProc, 0, 0); 
+            SetWindowSubclass(hwnd, &WindowProc, 0, 0);
+
+            uint dpi = GetDpiForWindow(hwnd);
+            int width = (int)(900 * dpi / 96.0f);
+            int height = (int)(600 * dpi / 96.0f);
+
+            AppWindow.Resize(new Windows.Graphics.SizeInt32(width, height));
         }
     }
 
