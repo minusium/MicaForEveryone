@@ -2,11 +2,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34004.107
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicaForEveryone.App", "MicaForEveryone.App\MicaForEveryone.App.csproj", "{CB853E8F-77CB-4040-8DBF-DC312C9654E8}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicaForEveryone.CoreUI", "MicaForEveryone.CoreUI\MicaForEveryone.CoreUI.csproj", "{3DB0A87B-1C1B-4962-980B-22AF75BBD8D9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicaForEveryone.Models", "MicaForEveryone.Models\MicaForEveryone.Models.csproj", "{6CCA71A1-8C2B-4756-8A14-DD2FB382E902}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicaForEveryone.App", "MicaForEveryone.App\MicaForEveryone.App.csproj", "{CB853E8F-77CB-4040-8DBF-DC312C9654E8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
