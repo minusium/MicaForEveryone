@@ -17,10 +17,13 @@
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
-    <Page x:Name="RootPage" ActualThemeChanged="RootPage_ActualThemeChanged">
+    <Page
+        x:Name="RootPage"
+        ActualThemeChanged="RootPage_ActualThemeChanged"
+        SizeChanged="RootPage_SizeChanged">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="32" />
+                <RowDefinition x:Name="TitleBarRow" Height="48" />
                 <RowDefinition />
             </Grid.RowDefinitions>
 
@@ -45,12 +48,15 @@
                         </DataTemplate>
                     </controls:IsDataTypeTemplateSelector.IsNotType>
                 </controls:IsDataTypeTemplateSelector>
+                <x:Double x:Key="SettingsCardWrapThreshold">0</x:Double>
             </Grid.Resources>
 
             <StackPanel
-                Margin="8,0,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
+                x:Name="TitleBarControl"
+                Margin="48,0,0,0"
+                Padding="8,0,0,0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
                 Orientation="Horizontal"
                 Spacing="8">
                 <Image
@@ -67,17 +73,17 @@
             </StackPanel>
 
             <NavigationView
-                Grid.Row="1"
+                x:Name="NavigationViewControl"
+                Grid.RowSpan="2"
                 CompactModeThresholdWidth="0"
                 ExpandedModeThresholdWidth="0"
                 IsBackButtonVisible="Collapsed"
-                IsPaneOpen="True"
-                IsPaneToggleButtonVisible="False"
                 IsSettingsVisible="False"
                 ItemInvoked="NavigationView_ItemInvoked"
                 MenuItemTemplateSelector="{StaticResource IsDataTypeTemplateSelector}"
                 MenuItemsSource="{x:Bind ViewModel.SettingsService.Settings.Rules, Mode=OneWay}"
-                PaneDisplayMode="Left"
+                OpenPaneLength="280"
+                PaneDisplayMode="LeftMinimal"
                 SelectionChanged="NavigationViewControl_SelectionChanged">
                 <NavigationView.Resources>
                     <Thickness x:Key="NavigationViewContentGridBorderThickness">0</Thickness>
@@ -106,7 +112,7 @@
                     </local:SettingsNavigationItem>
                 </NavigationView.FooterMenuItems>
                 <NavigationView.Content>
-                    <Frame x:Name="_contentFrame" />
+                    <Frame x:Name="_contentFrame" Margin="0,36,0,0" />
                 </NavigationView.Content>
             </NavigationView>
 
@@ -121,6 +127,23 @@
                         <VisualState.Setters>
                             <Setter Target="CaptionTextBlock.Foreground" Value="{ThemeResource TextFillColorPrimaryBrush}" />
                         </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+                <VisualStateGroup>
+                    <VisualState>
+                        <VisualState.Setters>
+                            <Setter Target="NavigationViewControl.PaneDisplayMode" Value="Left" />
+                            <Setter Target="NavigationViewControl.IsPaneToggleButtonVisible" Value="False" />
+                            <Setter Target="NavigationViewControl.IsPaneOpen" Value="True" />
+                            <Setter Target="NavigationViewControl.(Grid.RowSpan)" Value="1" />
+                            <Setter Target="NavigationViewControl.(Grid.Row)" Value="1" />
+                            <Setter Target="TitleBarRow.Height" Value="32" />
+                            <Setter Target="TitleBarControl.Margin" Value="0" />
+                            <Setter Target="_contentFrame.Margin" Value="0" />
+                        </VisualState.Setters>
+                        <VisualState.StateTriggers>
+                            <AdaptiveTrigger MinWindowWidth="700" />
+                        </VisualState.StateTriggers>
                     </VisualState>
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>

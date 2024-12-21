@@ -5,6 +5,7 @@ using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using TerraFX.Interop.Windows;
 using Windows.UI;
@@ -54,6 +55,7 @@ public sealed partial class SettingsWindow : Window
         ChangeButtonBackground();
         Title = "_Mica For Everyone Settings";
         AppWindow.SetIcon("Assets\\MicaForEveryone.ico");
+        SetTitleBar(TitleBarControl);
 
         unsafe
         {
@@ -66,6 +68,7 @@ public sealed partial class SettingsWindow : Window
 
             AppWindow.Resize(new Windows.Graphics.SizeInt32(width, height));
         }
+        NavigationViewControl.SelectedItem = NavigationViewControl.FooterMenuItems.Last();
     }
 
     [UnmanagedCallersOnly]
@@ -136,6 +139,18 @@ public sealed partial class SettingsWindow : Window
     }
 
     private void RootPage_ActualThemeChanged(FrameworkElement sender, object args) => ChangeButtonBackground();
+
+    private void RootPage_SizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        if (e.NewSize.Width < 700)
+        {
+            AppWindow.TitleBar.PreferredHeightOption = Microsoft.UI.Windowing.TitleBarHeightOption.Tall;
+        }
+        else
+        {
+            AppWindow.TitleBar.PreferredHeightOption = Microsoft.UI.Windowing.TitleBarHeightOption.Standard;
+        }
+    }
 }
 public partial class SettingsNavigationItem
 {
