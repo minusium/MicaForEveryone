@@ -67,6 +67,13 @@ public sealed partial class SettingsWindow : Window
             int height = (int)(600 * dpi / 96.0f);
 
             AppWindow.Resize(new Windows.Graphics.SizeInt32(width, height));
+
+            RECT rcWorkArea;
+            SystemParametersInfo(SPI.SPI_GETWORKAREA, 0, &rcWorkArea, 0);
+            int x = (int)((rcWorkArea.right + rcWorkArea.left) / 2.0f - width / 2.0f);
+            int y = (int)((rcWorkArea.top + rcWorkArea.bottom) / 2.0f - height / 2.0f);
+
+            AppWindow.Move(new Windows.Graphics.PointInt32(x, y));
         }
         NavigationViewControl.SelectedItem = NavigationViewControl.FooterMenuItems.Last();
     }
