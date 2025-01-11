@@ -74,7 +74,7 @@ public sealed partial class SettingsWindow : Window
     [UnmanagedCallersOnly]
     private static unsafe LRESULT WindowProc(HWND hWND, uint arg2, WPARAM wPARAM, LPARAM lPARAM, nuint arg5, nuint arg6)
     {
-        if (arg2 == (uint)WM.WM_DESTROY)
+        if (arg2 == WM.WM_DESTROY)
         {
             LRESULT result = DefSubclassProc(hWND, arg2, wPARAM, lPARAM);
             MSG msg;
@@ -89,6 +89,14 @@ public sealed partial class SettingsWindow : Window
                 break;
             }
             return result;
+        }
+        if (arg2 == WM.WM_GETMINMAXINFO)
+        {
+            var dpi = GetDpiForWindow(hWND);
+            float scale = dpi / 96.0f;
+            MINMAXINFO* minMaxInfo = (MINMAXINFO*)lPARAM;
+            minMaxInfo->ptMinTrackSize.x = (int)(500 * scale);
+            minMaxInfo->ptMinTrackSize.y = (int)(500 * scale);
         }
         return DefSubclassProc(hWND, arg2, wPARAM, lPARAM);
     }
