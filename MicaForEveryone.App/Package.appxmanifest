@@ -8,7 +8,7 @@
   IgnorableNamespaces="uap rescap">
 
   <Identity
-    Name="MicaForEveryone"
+    Name="MicaForEveryone.MicaForEveryone2"
     Publisher="CN=Đặng Bình Minh, O=Đặng Bình Minh, L=Hà Nội, C=VN"
     Version="2.0.0.0" />
 
