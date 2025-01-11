@@ -44,9 +44,13 @@
 
 		<!-- False positives -->
 		<NoWarn>WMC1506</NoWarn>
+
 		<AssemblyTitle>Mica For Everyone</AssemblyTitle>
 		<ProductName>Mica For Everyone</ProductName>
 		<Description>Mica For Everyone</Description>
+
+		<!-- Trusted Signing -->
+		<TrustedSigningMetadataPath>$(MSBuildProjectDirectory)\..\trusted-signing.json</TrustedSigningMetadataPath>
 	</PropertyGroup>
 	<ItemGroup>
 	  <None Remove="Controls\WindowPickerButton.xaml" />
@@ -56,6 +60,7 @@
 		<PackageReference Include="CommunityToolkit.Labs.Extensions.DependencyInjection" Version="0.1.241113-build.1784" />
 		<PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.2.241112-preview1" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
+		<PackageReference Include="Microsoft.Trusted.Signing.Client" Version="1.0.60" />
 		<PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" />
 		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.241114003" />
@@ -108,6 +113,17 @@
 			<_WebView2Loader Include="@(NativeCopyLocalItems)" Condition="'%(Filename)' == 'WebView2Loader'" />
 			<NativeCopyLocalItems Remove="@(_WebView2Loader)" />
 		</ItemGroup>
+	</Target>
+
+	<Target Name="SignAfterPublish" AfterTargets="__GetPublishItems" Condition="'$(TrustedSigningEnabled)' == 'true'">
+		<Error Condition="'$(TrustedSigningMetadataPath)' == ''" Text="The TrustedSigningMetadataPath property must be specified to sign." />
+		<ItemGroup>
+			<_SignableFiles Include="@(_PublishItem)" Condition="'%(Extension)' == '.exe'" />
+		</ItemGroup>
+		<PropertyGroup>
+			<TrustedSigningCommand>"$(WindowsSDKBuildToolsBinVersionedFolder)\x64\signtool.exe" sign /v /debug /fd SHA256 /tr "http://timestamp.acs.microsoft.com" /td SHA256 /dlib "$(TrustedSigningDlibFilePath)" /dmdf "$(TrustedSigningMetadataPath)" @(_SignableFiles->'"%(FullPath)"', ' ')</TrustedSigningCommand>
+		</PropertyGroup>
+		<Exec Command="$(TrustedSigningCommand)" />
 	</Target>
 
 </Project>

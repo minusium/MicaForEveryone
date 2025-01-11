@@ -9,7 +9,7 @@
 
   <Identity
     Name="MicaForEveryone"
-    Publisher="CN=Dongle"
+    Publisher="CN=Đặng Bình Minh, O=Đặng Bình Minh, L=Hà Nội, C=VN"
     Version="2.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="1be51f49-253e-46f4-ac2c-f9e60719f241" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
