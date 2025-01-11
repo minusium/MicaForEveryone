@@ -22,7 +22,7 @@
                     <FontIcon Glyph="&#xE17C;" />
                 </labs:SettingsCard.HeaderIcon>
 
-                <ToggleSwitch />
+                <ToggleSwitch x:Name="StartupToggle" Toggled="StartupToggle_Toggled" />
             </labs:SettingsCard>
 
             <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="_About" />

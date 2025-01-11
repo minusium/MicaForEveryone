@@ -29,6 +29,7 @@ public partial class App
         // Check if we are really running packaged.
         collection.AddSingleton<IVersionInfoService, PackagedVersionInfoService>();
         collection.AddSingleton<ISettingsService, PackagedSettingsService>();
+        collection.AddSingleton<IStartupService, PackagedStartupService>();
 
         ConfigureServices(collection);
 
