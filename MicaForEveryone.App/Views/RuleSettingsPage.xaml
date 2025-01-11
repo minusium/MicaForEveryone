@@ -76,6 +76,15 @@
                 </ComboBox>
             </ct:SettingsCard>
 
+            <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="_Advanced" />
+            <ct:SettingsCard Header="_Extend frame into client area">
+                <ct:SettingsCard.HeaderIcon>
+                    <FontIcon Glyph="&#xE73B;" />
+                </ct:SettingsCard.HeaderIcon>
+
+                <ToggleSwitch IsOn="{x:Bind Rule.ExtendFrameIntoClientArea, Mode=TwoWay}" />
+            </ct:SettingsCard>
+
             <TextBlock
                 Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"
                 Text="_Remove"

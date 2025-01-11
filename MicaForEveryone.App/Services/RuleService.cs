@@ -169,6 +169,15 @@ public sealed class RuleService : IRuleService
             }
         }
 
+        if (mostApplicableRule.ExtendFrameIntoClientArea)
+        {
+            MARGINS margins = new() { cxLeftWidth = -1, cxRightWidth = -1, cyTopHeight = -1, cyBottomHeight = -1 };
+            unsafe
+            {
+                DwmExtendFrameIntoClientArea(hWnd, &margins);
+            }
+        }
+
         return Task.CompletedTask;
     }
 }
