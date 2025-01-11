@@ -1,4 +1,8 @@
-﻿using Microsoft.UI.Dispatching;
+﻿using MicaForEveryone.App.Services;
+using MicaForEveryone.CoreUI;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
 using System;
 using System.Threading;
@@ -35,6 +39,7 @@ class Program
 
         if (keyInstance.IsCurrent)
         {
+            AppInstance.GetCurrent().Activated +=Program_Activated;
         }
         else
         {
@@ -42,5 +47,12 @@ class Program
             await keyInstance.RedirectActivationToAsync(args);
         }
         return isRedirect;
+    }
+
+    private static async void Program_Activated(object? sender, AppActivationArguments e)
+    {
+        if (App.Services.GetService<IDispatchingService>() is IDispatchingService dispatcher)
+            await dispatcher.YieldAsync();
+        App.Services.GetService<MainAppService>()?.ActivateSettings();
     }
 }

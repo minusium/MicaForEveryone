@@ -58,17 +58,17 @@ public sealed unsafe class MainAppService
 
     public void ActivateSettings()
     {
-        try
-        {
-            _window ??= new SettingsWindow();
-            _window.Activate();
-        }
-        catch
-        {
-            // WinUI doesn't let us know whether a window has been closed or not.
-            _window = new SettingsWindow();
-            _window.Activate();
-        }
+        _window ??= new SettingsWindow();
+        _window.Closed += _window_Closed;
+        _window.Activate();
+        HWND hwnd = new HWND((void*)WindowNative.GetWindowHandle(_window));
+        SetForegroundWindow(hwnd);
+    }
+
+    private void _window_Closed(object sender, Microsoft.UI.Xaml.WindowEventArgs args)
+    {
+        ((Microsoft.UI.Xaml.Window)sender).Closed -= _window_Closed;
+        _window = null;
     }
 
     public void Shutdown()
