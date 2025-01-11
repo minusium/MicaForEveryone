@@ -37,14 +37,17 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
             </ct:SettingsCard>
-            <ct:SettingsCard Header="_Backdrop type">
+            <ct:SettingsCard
+                x:Name="BackdropTypeCard"
+                x:Load="{x:Bind RuleService.AreMaterialsSupported}"
+                Header="_Backdrop type">
                 <ct:SettingsCard.HeaderIcon>
                     <FontIcon Glyph="&#xF5EF;" />
                 </ct:SettingsCard.HeaderIcon>
 
                 <ComboBox
                     MinWidth="110"
-                    ItemsSource="{x:Bind helpers:EnumHelper.BackdropTypes}"
+                    ItemsSource="{x:Bind RuleService.SupportedBackdropTypes}"
                     SelectedItem="{x:Bind Rule.BackdropPreference, Mode=TwoWay}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate x:DataType="models:BackdropType">
@@ -53,7 +56,10 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
             </ct:SettingsCard>
-            <ct:SettingsCard Header="_Corner preference">
+            <ct:SettingsCard
+                x:Name="CornerPreferenceCard"
+                x:Load="{x:Bind RuleService.AreCornerPreferencesSupported}"
+                Header="_Corner preference">
                 <ct:SettingsCard.HeaderIcon>
                     <FontIcon Glyph="&#xE71A;" />
                 </ct:SettingsCard.HeaderIcon>

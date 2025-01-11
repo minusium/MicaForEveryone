@@ -1,6 +1,8 @@
 ﻿using MicaForEveryone.CoreUI;
 using MicaForEveryone.Models;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -19,14 +21,28 @@ public sealed class RuleService : IRuleService
     private readonly IThemingService _themingService;
     private HWINEVENTHOOK _eventHookHandler;
 
+    public BackdropType[] SupportedBackdropTypes { get; }
+
     public RuleService(ISettingsService settingsService, IThemingService themingService)
     {
         _settingsService = settingsService;
         _themingService = themingService;
         _themingService.ThemeChanged += (_, _) => _ = ApplyRulesToAllWindowsAsync();
+
+        if (!AreAdditionalMaterialsSupported)
+            SupportedBackdropTypes = [BackdropType.Default, BackdropType.None, BackdropType.Mica];
+        else
+            SupportedBackdropTypes = Enum.GetValues<BackdropType>();
     }
 
     private static int _currentSession;
+
+    Lazy<bool> _is22000 = new(static () => Environment.OSVersion.Version >= new Version(10, 0, 22000));
+    Lazy<bool> _is22523 = new(static () => Environment.OSVersion.Version >= new Version(10, 0, 22523));
+
+    public bool AreMaterialsSupported { get => _is22000.Value; }
+    public bool AreAdditionalMaterialsSupported { get => _is22523.Value; }
+    public bool AreCornerPreferencesSupported { get => _is22000.Value; }
 
     public unsafe void Initialize()
     {
@@ -129,8 +145,17 @@ public sealed class RuleService : IRuleService
             uint bp = (uint)mostApplicableRule.BackdropPreference;
             unsafe
             {
-                const uint DWMWA_SYSTEMBACKDROP_TYPE = 38;
-                DwmSetWindowAttribute(hWnd, DWMWA_SYSTEMBACKDROP_TYPE, &bp, sizeof(uint));
+                if (AreAdditionalMaterialsSupported)
+                {
+                    const uint DWMWA_SYSTEMBACKDROP_TYPE = 38;
+                    DwmSetWindowAttribute(hWnd, DWMWA_SYSTEMBACKDROP_TYPE, &bp, sizeof(uint));
+                }
+                else
+                {
+                    const uint DWMWA_MICA_EFFECT = 1029;
+                    int micaValue = mostApplicableRule.BackdropPreference == BackdropType.Mica ? 1 : 0;
+                    DwmSetWindowAttribute(hWnd, DWMWA_MICA_EFFECT, &micaValue, sizeof(int));
+                }
             }
         }
 

@@ -15,16 +15,6 @@ public static class EnumHelper
         }
     }
 
-    private static BackdropType[]? _backdropTypes;
-
-    public static BackdropType[] BackdropTypes
-    {
-        get
-        {
-            return _backdropTypes ??= Enum.GetValues<BackdropType>();
-        }
-    }
-
     private static CornerPreference[]? _cornerPreferences;
 
     public static CornerPreference[] CornerPreferences
