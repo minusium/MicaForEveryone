@@ -48,12 +48,10 @@
 		<AssemblyTitle>Mica For Everyone</AssemblyTitle>
 		<ProductName>Mica For Everyone</ProductName>
 		<Description>Mica For Everyone</Description>
-
-		<!-- Trusted Signing -->
-		<TrustedSigningMetadataPath>$(MSBuildProjectDirectory)\..\trusted-signing.json</TrustedSigningMetadataPath>
 	</PropertyGroup>
+
 	<ItemGroup>
-	  <None Remove="Controls\WindowPickerButton.xaml" />
+		<LinkerArg Include="/INTEGRITYCHECK" Condition="$(RuntimeIdentifier.StartsWith('win')) And '$(TrustedSigningEnabled)' == 'true'" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -71,7 +69,7 @@
     Defining the "Msix" ProjectCapability here allows the Single-project MSIX Packaging
     Tools extension to be activated for this project even if the Windows App SDK Nuget
     package has not yet been restored.
-  -->
+    -->
 	<ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
 		<ProjectCapability Include="Msix" />
 	</ItemGroup>
@@ -81,17 +79,11 @@
 		<ProjectReference Include="..\MicaForEveryone.Models\MicaForEveryone.Models.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Page Update="Controls\WindowPickerButton.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
-	</ItemGroup>
-
 	<!--
     Defining the "HasPackageAndPublishMenuAddedByProject" property here allows the Solution
     Explorer "Package and Publish" context menu entry to be enabled for this project even if
     the Windows App SDK Nuget package has not yet been restored.
-  -->
+    -->
 	<PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
 		<HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
 	</PropertyGroup>
