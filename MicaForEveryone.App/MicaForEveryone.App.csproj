@@ -56,6 +56,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Labs.Extensions.DependencyInjection" Version="0.1.241113-build.1784" />
+		<PackageReference Include="CommunityToolkit.WinUI.Controls.Primitives" Version="8.2.241112-preview1" />
 		<PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.2.241112-preview1" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
 		<PackageReference Include="Microsoft.Trusted.Signing.Client" Version="1.0.60" />
@@ -114,6 +115,14 @@
 		</ItemGroup>
 		<PropertyGroup>
 			<TrustedSigningCommand>"$(WindowsSDKBuildToolsBinVersionedFolder)\x64\signtool.exe" sign /v /debug /fd SHA256 /tr "http://timestamp.acs.microsoft.com" /td SHA256 /dlib "$(TrustedSigningDlibFilePath)" /dmdf "$(TrustedSigningMetadataPath)" @(_SignableFiles->'"%(FullPath)"', ' ')</TrustedSigningCommand>
+		</PropertyGroup>
+		<Exec Command="$(TrustedSigningCommand)" />
+	</Target>
+
+	<Target Name="SignMsixFile" Condition="'$(TrustedSigningEnabled)' == 'true'" AfterTargets="_GenerateAppxPackageFile">
+		<Error Condition="'$(TrustedSigningMetadataPath)' == ''" Text="The TrustedSigningMetadataPath property must be specified to sign." />
+		<PropertyGroup>
+			<TrustedSigningCommand>"$(WindowsSDKBuildToolsBinVersionedFolder)\x64\signtool.exe" sign /v /debug /fd SHA256 /tr "http://timestamp.acs.microsoft.com" /td SHA256 /dlib "$(TrustedSigningDlibFilePath)" /dmdf "$(TrustedSigningMetadataPath)" @(FinalAppxPackageItem->'"%(FullPath)"', ' ')</TrustedSigningCommand>
 		</PropertyGroup>
 		<Exec Command="$(TrustedSigningCommand)" />
 	</Target>

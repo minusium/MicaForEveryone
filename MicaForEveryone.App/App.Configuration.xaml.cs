@@ -30,6 +30,7 @@ public partial class App
         collection.AddSingleton<IVersionInfoService, PackagedVersionInfoService>();
         collection.AddSingleton<ISettingsService, PackagedSettingsService>();
         collection.AddSingleton<IStartupService, PackagedStartupService>();
+        collection.AddSingleton<IUpdateCheckerService, PackagedUpdateCheckerService>();
 
         ConfigureServices(collection);
 

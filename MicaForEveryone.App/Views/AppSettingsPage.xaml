@@ -4,7 +4,9 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:MicaForEveryone.App.Controls"
+    xmlns:coreModels="using:MicaForEveryone.CoreUI"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helpers="using:MicaForEveryone.App.Helpers"
     xmlns:labs="using:CommunityToolkit.WinUI.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
@@ -24,6 +26,56 @@
 
                 <ToggleSwitch x:Name="StartupToggle" Toggled="StartupToggle_Toggled" />
             </labs:SettingsCard>
+
+            <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="_Update" />
+            <labs:SettingsCard Header="_Check for updates">
+                <labs:SettingsCard.HeaderIcon>
+                    <FontIcon Glyph="&#xE895;" />
+                </labs:SettingsCard.HeaderIcon>
+
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <ProgressRing
+                        Width="20"
+                        Height="20"
+                        HorizontalAlignment="Center"
+                        IsActive="{x:Bind ViewModel.CheckForUpdatesCommand.IsRunning, Mode=OneWay}"
+                        IsIndeterminate="True" />
+                    <Button
+                        HorizontalAlignment="Center"
+                        Command="{x:Bind ViewModel.CheckForUpdatesCommand}"
+                        Content="_Check for updates"
+                        IsEnabled="{x:Bind helpers:FunctionBindings.Not(ViewModel.CheckForUpdatesCommand.IsRunning), Mode=OneWay}" />
+                </StackPanel>
+            </labs:SettingsCard>
+
+            <labs:SwitchPresenter
+                x:Name="UpdateInfoContainer"
+                x:Load="{x:Bind ViewModel.UpdateChecked, Mode=OneWay}"
+                Value="{x:Bind ViewModel.UpdateAvailability, Mode=OneWay}">
+                <labs:Case Value="{x:Bind coreModels:UpdateAvailability.NoUpdate}">
+                    <InfoBar
+                        Title="_Mica For Everyone is up to date"
+                        IsClosable="False"
+                        IsOpen="True"
+                        Severity="Success" />
+                </labs:Case>
+                <labs:Case Value="{x:Bind coreModels:UpdateAvailability.UpdateAvailable}">
+                    <InfoBar
+                        Title="_An update is available"
+                        IsClosable="False"
+                        IsOpen="True"
+                        Message="_Please restart Mica For Everyone to apply the update."
+                        Severity="Warning" />
+                </labs:Case>
+                <labs:Case Value="{x:Bind coreModels:UpdateAvailability.Error}">
+                    <InfoBar
+                        Title="_An error occurred"
+                        IsClosable="False"
+                        IsOpen="True"
+                        Message="_We could not check for updates at this time. Please try again later."
+                        Severity="Error" />
+                </labs:Case>
+            </labs:SwitchPresenter>
 
             <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="_About" />
             <labs:SettingsExpander Description="{x:Bind ViewModel.AppVersion}" Header="_About Mica For Everyone">
