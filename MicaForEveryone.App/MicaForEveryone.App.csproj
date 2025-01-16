@@ -35,7 +35,6 @@
 		<CsWinRTIIDOptimizerOptOut>true</CsWinRTIIDOptimizerOptOut>
 		
 		<!-- Prevent WebView2Loader.dll from being copied to the runtime folder -->
-		
 		<WebView2UseWinRT>true</WebView2UseWinRT>
 		
 		<!-- Enable size inspection using sizoscope -->
@@ -43,7 +42,7 @@
 		<IlcGenerateDgmlFile>true</IlcGenerateDgmlFile>
 
 		<!-- False positives -->
-		<NoWarn>WMC1506</NoWarn>
+		<NoWarn>$(NoWarn);WMC1506</NoWarn>
 
 		<AssemblyTitle>Mica For Everyone</AssemblyTitle>
 		<ProductName>Mica For Everyone</ProductName>
@@ -58,11 +57,11 @@
 		<PackageReference Include="CommunityToolkit.Labs.Extensions.DependencyInjection" Version="0.1.241113-build.1784" />
 		<PackageReference Include="CommunityToolkit.WinUI.Controls.Primitives" Version="8.2.241112-preview1" />
 		<PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.2.241112-preview1" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.1" />
 		<PackageReference Include="Microsoft.Trusted.Signing.Client" Version="1.0.60" />
 		<PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" />
-		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.241114003" />
+		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.250108002" />
 		<Manifest Include="$(ApplicationManifest)" />
 	</ItemGroup>
 
