@@ -2,7 +2,6 @@
 using MicaForEveryone.CoreUI;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Dispatching;
-using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
 using System;
 using System.Threading;

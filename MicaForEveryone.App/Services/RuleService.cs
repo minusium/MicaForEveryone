@@ -12,10 +12,51 @@ using static TerraFX.Interop.Windows.Windows;
 
 namespace MicaForEveryone.App.Services;
 
+// Declare ACCENT_STATE
+[Flags]
+public enum ACCENT_STATE
+{
+    ACCENT_DISABLED = 0,
+    ACCENT_ENABLE_GRADIENT = 1,
+    ACCENT_ENABLE_TRANSPARENTGRADIENT = 2,
+    ACCENT_ENABLE_BLURBEHIND = 3,
+    ACCENT_ENABLE_ACRYLICBLURBEHIND = 4,
+    ACCENT_ENABLE_HOSTBACKDROP = 5,
+    ACCENT_INVALID_STATE = 6
+}
+
+// Declare ACCENT_POLICY
+[StructLayout(LayoutKind.Sequential)]
+public struct ACCENT_POLICY
+{
+    public ACCENT_STATE AccentState;
+    public uint AccentFlags;
+    public uint GradientColor;
+    public uint AnimationId;
+}
+
+// Declare WINDOWCOMPOSITIONATTRIB
+public enum WINDOWCOMPOSITIONATTRIB
+{
+    WCA_ACCENT_POLICY = 19
+}
+
+// Declare WINDOWCOMPOSITIONATTRIBDATA
+[StructLayout(LayoutKind.Sequential)]
+public struct WINDOWCOMPOSITIONATTRIBDATA
+{
+    public WINDOWCOMPOSITIONATTRIB Attrib;
+    public IntPtr pvData;
+    public uint cbData;
+}
+
 public sealed class RuleService : IRuleService
 {
     [DllImport("user32")]
     private static extern BOOL IsTopLevelWindow(HWND hWnd);
+
+    [DllImport("user32")]
+    private static unsafe extern BOOL SetWindowCompositionAttribute(HWND hWnd, WINDOWCOMPOSITIONATTRIBDATA* data);
 
     private readonly ISettingsService _settingsService;
     private readonly IThemingService _themingService;
@@ -175,6 +216,35 @@ public sealed class RuleService : IRuleService
             unsafe
             {
                 DwmExtendFrameIntoClientArea(hWnd, &margins);
+            }
+        }
+
+        if (mostApplicableRule.EnableBlurBehind)
+        {
+            unsafe
+            {
+                DWM_BLURBEHIND bb = new()
+                {
+                    fEnable = BOOL.TRUE,
+                    dwFlags = DWM.DWM_BB_ENABLE,
+                    fTransitionOnMaximized = BOOL.FALSE,
+                    hRgnBlur = HRGN.NULL
+                };
+
+                DwmEnableBlurBehindWindow(hWnd, &bb);
+
+                ACCENT_POLICY accent = new()
+                {
+                    AccentState = ACCENT_STATE.ACCENT_ENABLE_BLURBEHIND | ACCENT_STATE.ACCENT_ENABLE_GRADIENT,
+                    GradientColor = unchecked((uint)((152 << 24) | (0x2B2B2B & 0xFFFFFF)))
+                };
+                WINDOWCOMPOSITIONATTRIBDATA attrib = new()
+                {
+                    Attrib = WINDOWCOMPOSITIONATTRIB.WCA_ACCENT_POLICY,
+                    pvData = (nint)(&accent),
+                    cbData = (uint)sizeof(ACCENT_POLICY)
+                };
+                SetWindowCompositionAttribute(hWnd, &attrib);
             }
         }
 

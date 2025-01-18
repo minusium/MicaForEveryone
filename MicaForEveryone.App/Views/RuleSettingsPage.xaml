@@ -77,12 +77,27 @@
             </ct:SettingsCard>
 
             <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="_Advanced" />
+            <InfoBar
+                Title="_Dangerous options ahead"
+                IsClosable="False"
+                IsOpen="True"
+                Message="_The following settings may break apps. Save your work before enabling any of them!"
+                Severity="Warning" />
+
             <ct:SettingsCard Header="_Extend frame into client area">
                 <ct:SettingsCard.HeaderIcon>
                     <FontIcon Glyph="&#xE73B;" />
                 </ct:SettingsCard.HeaderIcon>
 
                 <ToggleSwitch IsOn="{x:Bind Rule.ExtendFrameIntoClientArea, Mode=TwoWay}" />
+            </ct:SettingsCard>
+
+            <ct:SettingsCard Header="_Enable blur behind">
+                <ct:SettingsCard.HeaderIcon>
+                    <FontIcon Glyph="&#xF5EE;" />
+                </ct:SettingsCard.HeaderIcon>
+
+                <ToggleSwitch IsOn="{x:Bind Rule.EnableBlurBehind, Mode=TwoWay}" />
             </ct:SettingsCard>
 
             <TextBlock

@@ -58,7 +58,7 @@
 		<PackageReference Include="CommunityToolkit.WinUI.Controls.Primitives" Version="8.2.241112-preview1" />
 		<PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.2.241112-preview1" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.1" />
-		<PackageReference Include="Microsoft.Trusted.Signing.Client" Version="1.0.60" />
+		<PackageReference Include="Dongle.TrustedSigning" Version="1.0.60" />
 		<PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" />
 		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.250108002" />
@@ -113,7 +113,7 @@
 			<_SignableFiles Include="@(_PublishItem)" Condition="'%(Extension)' == '.exe'" />
 		</ItemGroup>
 		<PropertyGroup>
-			<TrustedSigningCommand>"$(WindowsSDKBuildToolsBinVersionedFolder)\x64\signtool.exe" sign /v /debug /fd SHA256 /tr "http://timestamp.acs.microsoft.com" /td SHA256 /dlib "$(TrustedSigningDlibFilePath)" /dmdf "$(TrustedSigningMetadataPath)" @(_SignableFiles->'"%(FullPath)"', ' ')</TrustedSigningCommand>
+			<TrustedSigningCommand>"$(SignAppxPackageExeFullPath)" sign /v /debug /fd SHA256 /tr "http://timestamp.acs.microsoft.com" /td SHA256 /dlib "$(TrustedSigningDlibFilePath)" /dmdf "$(TrustedSigningMetadataPath)" @(_SignableFiles->'"%(FullPath)"', ' ')</TrustedSigningCommand>
 		</PropertyGroup>
 		<Exec Command="$(TrustedSigningCommand)" />
 	</Target>
@@ -121,7 +121,7 @@
 	<Target Name="SignMsixFile" Condition="'$(TrustedSigningEnabled)' == 'true'" AfterTargets="_GenerateAppxPackageFile">
 		<Error Condition="'$(TrustedSigningMetadataPath)' == ''" Text="The TrustedSigningMetadataPath property must be specified to sign." />
 		<PropertyGroup>
-			<TrustedSigningCommand>"$(WindowsSDKBuildToolsBinVersionedFolder)\x64\signtool.exe" sign /v /debug /fd SHA256 /tr "http://timestamp.acs.microsoft.com" /td SHA256 /dlib "$(TrustedSigningDlibFilePath)" /dmdf "$(TrustedSigningMetadataPath)" @(FinalAppxPackageItem->'"%(FullPath)"', ' ')</TrustedSigningCommand>
+			<TrustedSigningCommand>"$(SignAppxPackageExeFullPath)" sign /v /debug /fd SHA256 /tr "http://timestamp.acs.microsoft.com" /td SHA256 /dlib "D:\source\TrustedSigningNAOT\TrustedSigningNAOT\bin\Release\net9.0-windows10.0.22621\win-arm64\publish\TrustedSigningNAOT.dll" /dmdf "$(TrustedSigningMetadataPath)" @(FinalAppxPackageItem->'"%(FullPath)"', ' ')</TrustedSigningCommand>
 		</PropertyGroup>
 		<Exec Command="$(TrustedSigningCommand)" />
 	</Target>
