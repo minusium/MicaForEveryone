@@ -110,12 +110,10 @@ public sealed partial class SettingsWindow : Window
 
     private void NavigationView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
     {
-        /*
         if (args.InvokedItemContainer.Tag is SettingsNavigationItem { Tag: "AddRuleNavViewItem" })
         {
             _addNewItemFlyout.ShowAt(args.InvokedItemContainer);
         }
-        */
     }
 
     private void NavigationViewControl_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
