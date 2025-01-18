@@ -11,4 +11,6 @@ public interface ILocalizationService
     string GetLocalizedBackdropType(BackdropType backdropType);
 
     string GetLocalizedCornerPreference(CornerPreference cornerPreference);
+
+    string GetRuleName(Rule rule);
 }

@@ -11,12 +11,12 @@
 
     <Page.ContextFlyout>
         <MenuFlyout>
-            <MenuFlyoutItem Command="{x:Bind ViewModel.SettingsCommand}" Text="_Settings">
+            <MenuFlyoutItem x:Uid="SettingsFlyoutItem" Command="{x:Bind ViewModel.SettingsCommand}">
                 <MenuFlyoutItem.Icon>
                     <SymbolIcon Symbol="Setting" />
                 </MenuFlyoutItem.Icon>
             </MenuFlyoutItem>
-            <MenuFlyoutItem Command="{x:Bind ViewModel.ExitCommand}" Text="_Exit">
+            <MenuFlyoutItem x:Uid="ExitFlyoutItem" Command="{x:Bind ViewModel.ExitCommand}">
                 <MenuFlyoutItem.Icon>
                     <FontIcon Glyph="&#xE7E8;" />
                 </MenuFlyoutItem.Icon>

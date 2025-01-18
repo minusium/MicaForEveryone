@@ -7,12 +7,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:MicaForEveryone.App.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="_Add Class Rule"
-    CloseButtonText="_Close"
+    x:Uid="AddClassRuleDialog"
     DefaultButton="Primary"
     IsPrimaryButtonEnabled="{x:Bind ViewModel.IsAddButtonEnabled, Mode=OneWay}"
     PrimaryButtonCommand="{x:Bind ViewModel.AddRuleCommand}"
-    PrimaryButtonText="_Add rule"
     mc:Ignorable="d">
 
     <ContentDialog.Style>
@@ -20,7 +18,7 @@
     </ContentDialog.Style>
 
     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
-        <TextBox PlaceholderText="_Enter a class name" Text="{x:Bind ViewModel.ClassName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBox x:Uid="ClassTextBox" Text="{x:Bind ViewModel.ClassName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         <controls:WindowPickerButton Grid.Column="1" WindowChanged="WindowPickerButton_WindowChanged">
             <FontIcon Glyph="&#xF7ED;" />
         </controls:WindowPickerButton>

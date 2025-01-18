@@ -7,12 +7,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:MicaForEveryone.App.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="_Add Process Rule"
-    CloseButtonText="_Close"
+    x:Uid="AddProcessRuleDialog"
     DefaultButton="Primary"
     IsPrimaryButtonEnabled="{x:Bind ViewModel.IsAddButtonEnabled, Mode=OneWay}"
     PrimaryButtonCommand="{x:Bind ViewModel.AddRuleCommand}"
-    PrimaryButtonText="_Add rule"
     mc:Ignorable="d">
 
     <ContentDialog.Style>
@@ -25,8 +23,8 @@
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <AutoSuggestBox
+            x:Uid="ProcessTextBox"
             ItemsSource="{x:Bind ViewModel.Recommendations, Mode=OneWay}"
-            PlaceholderText="_Enter a process name"
             Text="{x:Bind ViewModel.ProcessName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             TextChanged="AutoSuggestBox_TextChanged" />
         <controls:WindowPickerButton Grid.Column="1" WindowChanged="WindowPickerButton_WindowChanged">

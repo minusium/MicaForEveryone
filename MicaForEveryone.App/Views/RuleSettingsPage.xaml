@@ -13,15 +13,15 @@
     x:Name="ThisPage"
     mc:Ignorable="d">
 
-    <controls:SettingsPageControl Header="{x:Bind helpers:RuleInfoHelper.GetRuleName(Rule)}">
+    <controls:SettingsPageControl Header="{x:Bind LocalizationService.GetRuleName(Rule)}">
         <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
             <StackPanel.ChildrenTransitions>
                 <EntranceThemeTransition FromVerticalOffset="50" />
                 <RepositionThemeTransition IsStaggeringEnabled="False" />
             </StackPanel.ChildrenTransitions>
 
-            <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="_Style" />
-            <ct:SettingsCard Header="_Title bar color">
+            <TextBlock x:Uid="StyleLabel" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+            <ct:SettingsCard x:Uid="TitleBarColorCard">
                 <ct:SettingsCard.HeaderIcon>
                     <FontIcon Glyph="&#xE790;" />
                 </ct:SettingsCard.HeaderIcon>
@@ -39,8 +39,8 @@
             </ct:SettingsCard>
             <ct:SettingsCard
                 x:Name="BackdropTypeCard"
-                x:Load="{x:Bind RuleService.AreMaterialsSupported}"
-                Header="_Backdrop type">
+                x:Uid="BackdropTypeCard"
+                x:Load="{x:Bind RuleService.AreMaterialsSupported}">
                 <ct:SettingsCard.HeaderIcon>
                     <FontIcon Glyph="&#xF5EF;" />
                 </ct:SettingsCard.HeaderIcon>
@@ -58,8 +58,8 @@
             </ct:SettingsCard>
             <ct:SettingsCard
                 x:Name="CornerPreferenceCard"
-                x:Load="{x:Bind RuleService.AreCornerPreferencesSupported}"
-                Header="_Corner preference">
+                x:Uid="CornerPreferenceCard"
+                x:Load="{x:Bind RuleService.AreCornerPreferencesSupported}">
                 <ct:SettingsCard.HeaderIcon>
                     <FontIcon Glyph="&#xE71A;" />
                 </ct:SettingsCard.HeaderIcon>
@@ -76,15 +76,14 @@
                 </ComboBox>
             </ct:SettingsCard>
 
-            <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="_Advanced" />
+            <TextBlock x:Uid="AdvancedLabel" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
             <InfoBar
-                Title="_Dangerous options ahead"
+                x:Uid="DangerousInfoBar"
                 IsClosable="False"
                 IsOpen="True"
-                Message="_The following settings may break apps. Save your work before enabling any of them!"
                 Severity="Warning" />
 
-            <ct:SettingsCard Header="_Extend frame into client area">
+            <ct:SettingsCard x:Uid="ExtendFrameCard">
                 <ct:SettingsCard.HeaderIcon>
                     <FontIcon Glyph="&#xE73B;" />
                 </ct:SettingsCard.HeaderIcon>
@@ -92,7 +91,7 @@
                 <ToggleSwitch IsOn="{x:Bind Rule.ExtendFrameIntoClientArea, Mode=TwoWay}" />
             </ct:SettingsCard>
 
-            <ct:SettingsCard Header="_Enable blur behind">
+            <ct:SettingsCard x:Uid="BlurBehindCard">
                 <ct:SettingsCard.HeaderIcon>
                     <FontIcon Glyph="&#xF5EE;" />
                 </ct:SettingsCard.HeaderIcon>
@@ -101,12 +100,12 @@
             </ct:SettingsCard>
 
             <TextBlock
+                x:Uid="RemoveLabel"
                 Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"
-                Text="_Remove"
                 Visibility="{x:Bind local:RuleSettingsPage.NotGlobalRuleVisibility(Rule)}" />
             <ct:SettingsCard
+                x:Uid="RemoveCard"
                 Click="SettingsCard_Click"
-                Header="_Remove rule"
                 HeaderIcon="Delete"
                 IsClickEnabled="True"
                 Visibility="{x:Bind local:RuleSettingsPage.NotGlobalRuleVisibility(Rule)}" />

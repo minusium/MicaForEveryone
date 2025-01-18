@@ -11,15 +11,15 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <controls:SettingsPageControl Header="_App settings">
+    <controls:SettingsPageControl x:Uid="AppSettingsPage">
         <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
             <StackPanel.ChildrenTransitions>
                 <EntranceThemeTransition FromVerticalOffset="50" />
                 <RepositionThemeTransition IsStaggeringEnabled="False" />
             </StackPanel.ChildrenTransitions>
 
-            <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="_Startup" />
-            <labs:SettingsCard Description="_Starts Mica For Everyone on launch." Header="_Launch on startup">
+            <TextBlock x:Uid="StartupLabel" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+            <labs:SettingsCard x:Uid="StartupCard">
                 <labs:SettingsCard.HeaderIcon>
                     <FontIcon Glyph="&#xE17C;" />
                 </labs:SettingsCard.HeaderIcon>
@@ -27,8 +27,8 @@
                 <ToggleSwitch x:Name="StartupToggle" Toggled="StartupToggle_Toggled" />
             </labs:SettingsCard>
 
-            <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="_Update" />
-            <labs:SettingsCard Header="_Check for updates">
+            <TextBlock x:Uid="UpdateLabel" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+            <labs:SettingsCard x:Uid="CheckForUpdatesCard">
                 <labs:SettingsCard.HeaderIcon>
                     <FontIcon Glyph="&#xE895;" />
                 </labs:SettingsCard.HeaderIcon>
@@ -41,9 +41,9 @@
                         IsActive="{x:Bind ViewModel.CheckForUpdatesCommand.IsRunning, Mode=OneWay}"
                         IsIndeterminate="True" />
                     <Button
+                        x:Uid="CheckForUpdatesButton"
                         HorizontalAlignment="Center"
                         Command="{x:Bind ViewModel.CheckForUpdatesCommand}"
-                        Content="_Check for updates"
                         IsEnabled="{x:Bind helpers:FunctionBindings.Not(ViewModel.CheckForUpdatesCommand.IsRunning), Mode=OneWay}" />
                 </StackPanel>
             </labs:SettingsCard>
@@ -54,31 +54,29 @@
                 Value="{x:Bind ViewModel.UpdateAvailability, Mode=OneWay}">
                 <labs:Case Value="{x:Bind coreModels:UpdateAvailability.NoUpdate}">
                     <InfoBar
-                        Title="_Mica For Everyone is up to date"
+                        x:Uid="UpToDateInfoBar"
                         IsClosable="False"
                         IsOpen="True"
                         Severity="Success" />
                 </labs:Case>
                 <labs:Case Value="{x:Bind coreModels:UpdateAvailability.UpdateAvailable}">
                     <InfoBar
-                        Title="_An update is available"
+                        x:Uid="UpdateAvailableInfoBar"
                         IsClosable="False"
                         IsOpen="True"
-                        Message="_Please restart Mica For Everyone to apply the update."
                         Severity="Warning" />
                 </labs:Case>
                 <labs:Case Value="{x:Bind coreModels:UpdateAvailability.Error}">
                     <InfoBar
-                        Title="_An error occurred"
+                        x:Uid="UpdateErrorInfoBar"
                         IsClosable="False"
                         IsOpen="True"
-                        Message="_We could not check for updates at this time. Please try again later."
                         Severity="Error" />
                 </labs:Case>
             </labs:SwitchPresenter>
 
-            <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="_About" />
-            <labs:SettingsExpander Description="{x:Bind ViewModel.AppVersion}" Header="_About Mica For Everyone">
+            <TextBlock x:Uid="AboutLabel" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+            <labs:SettingsExpander x:Uid="AboutCard" Description="{x:Bind ViewModel.AppVersion}">
                 <labs:SettingsExpander.HeaderIcon>
                     <BitmapIcon
                         Width="64"

@@ -4,8 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
-using System;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -21,6 +19,7 @@ public sealed partial class RuleSettingsPage : Page
     private Rule? Rule { get; set; }
     private ISettingsService SettingsService { get; }
     private IRuleService RuleService { get; }
+    private ILocalizationService LocalizationService { get; }
 
     public RuleSettingsPage()
     {
@@ -28,6 +27,7 @@ public sealed partial class RuleSettingsPage : Page
 
         RuleService = App.Services.GetRequiredService<IRuleService>();
         SettingsService = App.Services.GetRequiredService<ISettingsService>();
+        LocalizationService = App.Services.GetRequiredService<ILocalizationService>();
     }
 
     protected override void OnNavigatedTo(NavigationEventArgs e)

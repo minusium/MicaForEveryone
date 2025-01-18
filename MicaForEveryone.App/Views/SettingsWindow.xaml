@@ -66,10 +66,9 @@
                     Source="ms-appx:///Assets/Square44x44Logo.png" />
                 <TextBlock
                     x:Name="CaptionTextBlock"
+                    x:Uid="AppTitleTextBlock"
                     VerticalAlignment="Center"
-                    Style="{StaticResource CaptionTextBlockStyle}">
-                    _Mica For Everyone
-                </TextBlock>
+                    Style="{StaticResource CaptionTextBlockStyle}" />
             </StackPanel>
 
             <NavigationView

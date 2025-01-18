@@ -75,7 +75,7 @@ public sealed partial class SettingsWindow : Window
 
             AppWindow.Move(new Windows.Graphics.PointInt32(x, y));
         }
-        NavigationViewControl.SelectedItem = NavigationViewControl.FooterMenuItems.Last();
+        // NavigationViewControl.SelectedItem = NavigationViewControl.FooterMenuItems.Last();
     }
 
     [UnmanagedCallersOnly]
@@ -110,10 +110,12 @@ public sealed partial class SettingsWindow : Window
 
     private void NavigationView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
     {
+        /*
         if (args.InvokedItemContainer.Tag is SettingsNavigationItem { Tag: "AddRuleNavViewItem" })
         {
             _addNewItemFlyout.ShowAt(args.InvokedItemContainer);
         }
+        */
     }
 
     private void NavigationViewControl_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
