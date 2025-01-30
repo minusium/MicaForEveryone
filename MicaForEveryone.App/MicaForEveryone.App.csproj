@@ -121,7 +121,7 @@
 	<Target Name="SignMsixFile" Condition="'$(TrustedSigningEnabled)' == 'true'" AfterTargets="_GenerateAppxPackageFile">
 		<Error Condition="'$(TrustedSigningMetadataPath)' == ''" Text="The TrustedSigningMetadataPath property must be specified to sign." />
 		<PropertyGroup>
-			<TrustedSigningCommand>"$(SignAppxPackageExeFullPath)" sign /v /debug /fd SHA256 /tr "http://timestamp.acs.microsoft.com" /td SHA256 /dlib "D:\source\TrustedSigningNAOT\TrustedSigningNAOT\bin\Release\net9.0-windows10.0.22621\win-arm64\publish\TrustedSigningNAOT.dll" /dmdf "$(TrustedSigningMetadataPath)" @(FinalAppxPackageItem->'"%(FullPath)"', ' ')</TrustedSigningCommand>
+			<TrustedSigningCommand>"$(SignAppxPackageExeFullPath)" sign /v /debug /fd SHA256 /tr "http://timestamp.acs.microsoft.com" /td SHA256 /dlib "$(TrustedSigningDlibFilePath)" /dmdf "$(TrustedSigningMetadataPath)" @(FinalAppxPackageItem->'"%(FullPath)"', ' ')</TrustedSigningCommand>
 		</PropertyGroup>
 		<Exec Command="$(TrustedSigningCommand)" />
 	</Target>
