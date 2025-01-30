@@ -8,6 +8,7 @@ using Windows.Foundation;
 using TerraFX.Interop.Windows;
 using static TerraFX.Interop.Windows.Windows;
 using WinRT.Interop;
+using WinRT;
 
 namespace MicaForEveryone.App.Services;
 
@@ -160,7 +161,7 @@ public sealed unsafe class MainAppService
                             );
 
                             var page = (TrayIconPage)(appService._source!.Content);
-                            ((MenuFlyout)(page.ContextFlyout)).ShowAt(page, point);
+                            page.ContextFlyout.As<MenuFlyout>().ShowAt(page, point);
                             break;
 
                         case NIN_SELECT:

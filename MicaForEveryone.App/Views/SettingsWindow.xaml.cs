@@ -5,7 +5,6 @@ using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Linq;
 using System.Runtime.InteropServices;
 using TerraFX.Interop.Windows;
 using Windows.UI;
@@ -24,29 +23,9 @@ public sealed partial class SettingsWindow : Window
 {
     private SettingsViewModel ViewModel { get; }
 
-    private MenuFlyout _addNewItemFlyout = new();
-
     public SettingsWindow()
     {
         this.InitializeComponent();
-
-        MenuFlyoutItem processRuleItem = new() { Text = "_Add Process Rule" };
-        processRuleItem.Click += (_, _) =>
-        {
-            AddProcessRuleContentDialog addProcessRuleContentDialog = new();
-            addProcessRuleContentDialog.XamlRoot = Content.XamlRoot;
-            _ = addProcessRuleContentDialog.ShowAsync();
-        };
-        _addNewItemFlyout.Items.Add(processRuleItem);
-
-        MenuFlyoutItem classRuleItem = new() { Text = "_Add Class Rule" };
-        classRuleItem.Click += (_, _) =>
-        {
-            AddClassRuleContentDialog addClassRuleContentDialog = new();
-            addClassRuleContentDialog.XamlRoot = Content.XamlRoot;
-            _ = addClassRuleContentDialog.ShowAsync();
-        };
-        _addNewItemFlyout.Items.Add(classRuleItem);
 
         ViewModel = App.Services.GetRequiredService<SettingsViewModel>();
 
@@ -110,10 +89,6 @@ public sealed partial class SettingsWindow : Window
 
     private void NavigationView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
     {
-        if (args.InvokedItemContainer.Tag is SettingsNavigationItem { Tag: "AddRuleNavViewItem" })
-        {
-            _addNewItemFlyout.ShowAt(args.InvokedItemContainer);
-        }
     }
 
     private void NavigationViewControl_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
@@ -166,14 +141,46 @@ public sealed partial class SettingsWindow : Window
             AppWindow.TitleBar.PreferredHeightOption = Microsoft.UI.Windowing.TitleBarHeightOption.Standard;
         }
     }
+
+    private void Window_Closed(object sender, WindowEventArgs args)
+    {
+        Activated -= Window_Activated;
+    }
 }
-public partial class SettingsNavigationItem
+
+public sealed class AddNewRuleMenuItem;
+
+public sealed class AppSettingsMenuItem;
+
+public sealed partial class SettingsNavigationItemSelector : DataTemplateSelector
 {
-    public string? Uid { get; set; }
+    public DataTemplate GlobalRuleTemplate { get; set; } = new();
 
-    public string? Tag { get; set; }
+    public DataTemplate ProcessRuleTemplate { get; set; } = new();
 
-    public IconElement? Icon { get; set; }
+    public DataTemplate ClassRuleTemplate { get; set; } = new();
 
-    public bool Selectable { get; set; } = true;
+    public DataTemplate AddNewRuleTemplate { get; set; } = new();
+
+    public DataTemplate AppSettingsTemplate { get; set; } = new();
+
+    protected override DataTemplate SelectTemplateCore(object item)
+    {
+        if (item is GlobalRule)
+            return GlobalRuleTemplate;
+
+        if (item is ProcessRule)
+            return ProcessRuleTemplate;
+
+        if (item is ClassRule)
+            return ClassRuleTemplate;
+
+        if (item is AddNewRuleMenuItem)
+            return AddNewRuleTemplate;
+
+        if (item is AppSettingsMenuItem)
+            return AppSettingsTemplate;
+
+        throw new ArgumentException("Navigation menu item type is invalid.");
+    }
 }

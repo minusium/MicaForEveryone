@@ -11,6 +11,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:MicaForEveryone.Models"
     Activated="Window_Activated"
+    Closed="Window_Closed"
     mc:Ignorable="d">
 
     <Window.SystemBackdrop>
@@ -28,26 +29,59 @@
             </Grid.RowDefinitions>
 
             <Grid.Resources>
-                <controls:IsDataTypeTemplateSelector x:Key="IsDataTypeTemplateSelector" Type="local:SettingsNavigationItem">
-                    <controls:IsDataTypeTemplateSelector.IsType>
-                        <DataTemplate x:DataType="local:SettingsNavigationItem">
-                            <NavigationViewItem
-                                Content="{x:Bind Uid}"
-                                Icon="{x:Bind Icon}"
-                                SelectsOnInvoked="{x:Bind Selectable}"
-                                Tag="{x:Bind}" />
+                <local:SettingsNavigationItemSelector x:Key="NavigationItemSelector">
+                    <local:SettingsNavigationItemSelector.AddNewRuleTemplate>
+                        <DataTemplate>
+                            <controls:AddNewRuleNavigationViewItem
+                                x:Uid="AddNewRuleNavigationViewItem"
+                                Icon="Add"
+                                SelectsOnInvoked="False" />
                         </DataTemplate>
-                    </controls:IsDataTypeTemplateSelector.IsType>
-                    <controls:IsDataTypeTemplateSelector.IsNotType>
-                        <DataTemplate x:DataType="models:Rule">
-                            <NavigationViewItem Content="{x:Bind helpers:RuleInfoHelper.GetRuleName((models:Rule))}">
+                    </local:SettingsNavigationItemSelector.AddNewRuleTemplate>
+                    <local:SettingsNavigationItemSelector.AppSettingsTemplate>
+                        <DataTemplate>
+                            <NavigationViewItem x:Uid="AppSettingsNavigationViewItem">
                                 <NavigationViewItem.Icon>
-                                    <FontIcon Glyph="{x:Bind helpers:RuleInfoHelper.GetIcon((models:Rule))}" />
+                                    <AnimatedIcon>
+                                        <AnimatedIcon.Source>
+                                            <animatedVisuals:AnimatedSettingsVisualSource />
+                                        </AnimatedIcon.Source>
+                                        <AnimatedIcon.FallbackIconSource>
+                                            <SymbolIconSource Symbol="Setting" />
+                                        </AnimatedIcon.FallbackIconSource>
+                                    </AnimatedIcon>
                                 </NavigationViewItem.Icon>
                             </NavigationViewItem>
                         </DataTemplate>
-                    </controls:IsDataTypeTemplateSelector.IsNotType>
-                </controls:IsDataTypeTemplateSelector>
+                    </local:SettingsNavigationItemSelector.AppSettingsTemplate>
+                    <local:SettingsNavigationItemSelector.GlobalRuleTemplate>
+                        <DataTemplate>
+                            <NavigationViewItem x:Uid="GlobalRuleNavigationViewItem">
+                                <NavigationViewItem.Icon>
+                                    <FontIcon Glyph="&#xED35;" />
+                                </NavigationViewItem.Icon>
+                            </NavigationViewItem>
+                        </DataTemplate>
+                    </local:SettingsNavigationItemSelector.GlobalRuleTemplate>
+                    <local:SettingsNavigationItemSelector.ProcessRuleTemplate>
+                        <DataTemplate x:DataType="models:ProcessRule">
+                            <NavigationViewItem Content="{x:Bind ProcessName}">
+                                <NavigationViewItem.Icon>
+                                    <FontIcon Glyph="&#xECAA;" />
+                                </NavigationViewItem.Icon>
+                            </NavigationViewItem>
+                        </DataTemplate>
+                    </local:SettingsNavigationItemSelector.ProcessRuleTemplate>
+                    <local:SettingsNavigationItemSelector.ClassRuleTemplate>
+                        <DataTemplate x:DataType="models:ClassRule">
+                            <NavigationViewItem Content="{x:Bind ClassName}">
+                                <NavigationViewItem.Icon>
+                                    <FontIcon Glyph="&#xE737;" />
+                                </NavigationViewItem.Icon>
+                            </NavigationViewItem>
+                        </DataTemplate>
+                    </local:SettingsNavigationItemSelector.ClassRuleTemplate>
+                </local:SettingsNavigationItemSelector>
                 <x:Double x:Key="SettingsCardWrapThreshold">0</x:Double>
             </Grid.Resources>
 
@@ -79,7 +113,7 @@
                 IsBackButtonVisible="Collapsed"
                 IsSettingsVisible="False"
                 ItemInvoked="NavigationView_ItemInvoked"
-                MenuItemTemplateSelector="{StaticResource IsDataTypeTemplateSelector}"
+                MenuItemTemplateSelector="{StaticResource NavigationItemSelector}"
                 MenuItemsSource="{x:Bind ViewModel.SettingsService.Settings.Rules, Mode=OneWay}"
                 OpenPaneLength="280"
                 PaneDisplayMode="LeftMinimal"
@@ -89,26 +123,8 @@
                     <SolidColorBrush x:Key="NavigationViewContentBackground" Color="Transparent" />
                 </NavigationView.Resources>
                 <NavigationView.FooterMenuItems>
-                    <local:SettingsNavigationItem
-                        Uid="_Add rule"
-                        Selectable="False"
-                        Tag="AddRuleNavViewItem">
-                        <local:SettingsNavigationItem.Icon>
-                            <SymbolIcon Symbol="Add" />
-                        </local:SettingsNavigationItem.Icon>
-                    </local:SettingsNavigationItem>
-                    <local:SettingsNavigationItem Uid="_Settings" Tag="SettingsNavViewItem">
-                        <local:SettingsNavigationItem.Icon>
-                            <AnimatedIcon>
-                                <AnimatedIcon.Source>
-                                    <animatedVisuals:AnimatedSettingsVisualSource />
-                                </AnimatedIcon.Source>
-                                <AnimatedIcon.FallbackIconSource>
-                                    <SymbolIconSource Symbol="Setting" />
-                                </AnimatedIcon.FallbackIconSource>
-                            </AnimatedIcon>
-                        </local:SettingsNavigationItem.Icon>
-                    </local:SettingsNavigationItem>
+                    <local:AddNewRuleMenuItem />
+                    <local:AppSettingsMenuItem />
                 </NavigationView.FooterMenuItems>
                 <NavigationView.Content>
                     <Frame x:Name="_contentFrame" Margin="0,36,0,0" />

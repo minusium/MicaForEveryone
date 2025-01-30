@@ -270,4 +270,19 @@
   <data name="CustomTitleBarColorMode" xml:space="preserve">
     <value>Custom</value>
   </data>
+  <data name="AppSettingsNavigationViewItem.Content" xml:space="preserve">
+    <value>App settings</value>
+  </data>
+  <data name="AddNewRuleNavigationViewItem.Content" xml:space="preserve">
+    <value>Add new rule</value>
+  </data>
+  <data name="GlobalRuleNavigationViewItem.Content" xml:space="preserve">
+    <value>Global</value>
+  </data>
+  <data name="AddProcessRuleMenuFlyoutItem.Text" xml:space="preserve">
+    <value>Add process rule</value>
+  </data>
+  <data name="AddClassRuleMenuFlyoutItem.Text" xml:space="preserve">
+    <value>Add class rule</value>
+  </data>
 </root>
