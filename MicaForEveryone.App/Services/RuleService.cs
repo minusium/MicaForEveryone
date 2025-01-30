@@ -146,7 +146,7 @@ public sealed class RuleService : IRuleService
 
         nint style = GetWindowLongPtrW(hWnd, GWL.GWL_STYLE);
 
-        if ((styleEx & WS.WS_EX_NOACTIVATE) == WS.WS_EX_NOACTIVATE)
+        if ((styleEx & WS.WS_EX_NOACTIVATE) == WS.WS_EX_NOACTIVATE || (styleEx & WS.WS_EX_TRANSPARENT) == WS.WS_EX_TRANSPARENT)
             return false;
 
         if (IsTopLevelWindow(hWnd) == BOOL.FALSE)
