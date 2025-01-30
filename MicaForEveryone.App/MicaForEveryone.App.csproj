@@ -44,9 +44,9 @@
 		<!-- False positives -->
 		<NoWarn>$(NoWarn);WMC1506</NoWarn>
 
-		<AssemblyTitle>Mica For Everyone</AssemblyTitle>
-		<ProductName>Mica For Everyone</ProductName>
-		<Description>Mica For Everyone</Description>
+		<Version>2.0.1.0</Version>
+		<AssemblyVersion>2.0.1.0</AssemblyVersion>
+		<FileVersion>2.0.1.0</FileVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
