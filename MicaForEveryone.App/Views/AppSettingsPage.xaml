@@ -86,7 +86,7 @@
                 </labs:SettingsExpander.HeaderIcon>
                 <labs:SettingsExpander.Items>
                     <labs:SettingsCard ContentAlignment="Left">
-                        <HyperlinkButton Content="GitHub" NavigateUri="https://github.com/MicaForEveryone/MicaForEveryone/tree/winui3" />
+                        <HyperlinkButton Content="GitHub" NavigateUri="https://github.com/MicaForEveryone/MicaForEveryone" />
                     </labs:SettingsCard>
                 </labs:SettingsExpander.Items>
             </labs:SettingsExpander>
