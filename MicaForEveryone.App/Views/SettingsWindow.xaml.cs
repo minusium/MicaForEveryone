@@ -1,4 +1,5 @@
 using MicaForEveryone.App.ViewModels;
+using MicaForEveryone.CoreUI;
 using MicaForEveryone.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI;
@@ -23,16 +24,19 @@ public sealed partial class SettingsWindow : Window
 {
     private SettingsViewModel ViewModel { get; }
 
+    private ILocalizationService LocalizationService { get; }
+
     public SettingsWindow()
     {
         this.InitializeComponent();
 
         ViewModel = App.Services.GetRequiredService<SettingsViewModel>();
+        LocalizationService = App.Services.GetRequiredService<ILocalizationService>();
 
         ExtendsContentIntoTitleBar = true;
         AppWindow.TitleBar.ButtonBackgroundColor = AppWindow.TitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
         ChangeButtonBackground();
-        Title = "_Mica For Everyone Settings";
+        Title = LocalizationService.GetLocalizedString("SettingsWindowTitle");
         AppWindow.SetIcon("Assets\\MicaForEveryone.ico");
         SetTitleBar(TitleBarControl);
 

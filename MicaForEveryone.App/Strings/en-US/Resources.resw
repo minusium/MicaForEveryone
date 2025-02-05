@@ -285,4 +285,7 @@
   <data name="AddClassRuleMenuFlyoutItem.Text" xml:space="preserve">
     <value>Add class rule</value>
   </data>
+  <data name="SettingsWindowTitle" xml:space="preserve">
+    <value>Mica For Everyone Settings</value>
+  </data>
 </root>

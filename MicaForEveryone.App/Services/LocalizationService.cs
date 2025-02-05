@@ -36,7 +36,7 @@ public sealed class LocalizationService : ILocalizationService
 
     public string GetLocalizedString(string key)
     {
-        throw new System.NotImplementedException();
+        return resourceLoader.GetString(key);
     }
 
     public string GetLocalizedTitleBarColor(TitleBarColorMode titleBarColorMode)
